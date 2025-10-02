@@ -25,18 +25,14 @@ Data is stored **in-memory (array)** for learning purposes.
 
 ## 📂 Project Structure
 ```
-
 project-folder/
-│── index.js
-│── app.js
-│── src/
-│   ├── routes/
-│   │   └── todoRoutes.js
-│   └── controllers/
-│       └── todoController.js
-│── src/middleware/notFound.js
-│── package.json
-│── .env
+index.js
+app.js
+src>routes>todoRoutes.js
+src>controllers>todoController.js
+src>middleware>notFound.js
+package.json
+.env
 
 ````
 
