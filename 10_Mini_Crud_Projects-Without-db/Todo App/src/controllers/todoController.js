@@ -46,8 +46,19 @@ export const readAll=(req,res)=>{
    }
 }
 export const readById=(req,res)=>{
-      try {
+   try {
+      const {id}=req.params;
+      const todoId=parseInt(id);
+      const todo=todos.find((profile)=>profile.id===todoId);
       
+      if(!todo) return res.status(404).json({
+         message:"Todo list not found"
+      }) 
+
+      return res.status(200).json({
+         message:"Todo retrieved successfully",
+         todo
+      })
    } catch (error) {
       res.status(500).json({
          message:"server error",
