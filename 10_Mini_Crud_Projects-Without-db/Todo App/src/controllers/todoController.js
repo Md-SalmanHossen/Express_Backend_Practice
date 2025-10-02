@@ -7,7 +7,6 @@ export const createToDo=(req,res)=>{
    try {
 
       const {title,description}=req.body;
-
       if(!title) return res.status(400).json({
          message:"title not require"
       })
@@ -19,8 +18,6 @@ export const createToDo=(req,res)=>{
          complete:false,
          createdAt:new Date().toISOString()
       }
-
-   
 
       todos.push(newToDo);
       return res.status(201).json({
@@ -36,8 +33,11 @@ export const createToDo=(req,res)=>{
    }
 }
 export const readAll=(req,res)=>{
-      try {
-      
+   try {
+      return res.status(200).json({
+         count:todos.length,
+         todos
+      })   
    } catch (error) {
       res.status(500).json({
          message:"server error",
