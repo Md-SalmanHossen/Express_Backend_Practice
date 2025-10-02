@@ -150,10 +150,23 @@ export const updateById=(req,res)=>{
    }
 }
 
-
 export const deleteToDo=(req,res)=>{
    try {
-      
+
+      const {id}=req.params;
+      const getId=parseInt(id);
+      const index=todos.findIndex((item)=>item.id===getId);
+      if(index===-1){
+         return res.status(404).json({
+            message:`Todo not found`
+         });
+      };
+
+      const deletedTodo=todos.splice(index,1);
+      return res.status(200).json({
+         message:"Todo deleted successfully",
+         deletedTodo:deletedTodo[0]
+      })
    } catch (error) {
       res.status(500).json({
          message:"server error",
