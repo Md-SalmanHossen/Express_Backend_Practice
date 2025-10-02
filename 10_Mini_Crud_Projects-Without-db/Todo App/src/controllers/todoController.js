@@ -12,7 +12,7 @@ export const createToDo=(req,res)=>{
       })
 
       const newToDo={
-         id:idIncrease+5,
+         id:++idIncrease,
          title,
          ...(description && {description}),// truthy modern syntax for optional chaining
          complete:false,
@@ -93,6 +93,7 @@ export const updateToDo=(req,res)=>{
          ...existingTodo,
          title,
          description:description || existingTodo.description,
+         complete:complete,
          updatedAt:new Date().toISOString()
       }
       todos[todoIndex] = updateTodo;
