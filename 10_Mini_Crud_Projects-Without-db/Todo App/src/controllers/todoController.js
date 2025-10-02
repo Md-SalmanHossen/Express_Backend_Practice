@@ -66,9 +66,42 @@ export const readById=(req,res)=>{
       })
    }
 }
+
 export const updateToDo=(req,res)=>{
-      try {
-      
+   try {
+
+      const {id}=req.params; 
+      const todoId=parseInt(id);
+
+      if(isNaN(todoId)) return res.status(400).json({
+         message:"Invalid Todo Id"
+      }) 
+
+      const todoIndex=todos.findIndex((item)=>item.id===todoId);
+      if(todoIndex==-1) return res.status(404).json({
+         message:`Todo with id ${id} not found`
+      });
+
+      const {title,description,complete}=req.body;
+      if(! title|| complete===undefined){
+         return res.status(400).json({
+            message:"Title and complete required"
+         });
+      }
+      const existingTodo=todos[todoIndex];
+      const updateTodo={
+         ...existingTodo,
+         title,
+         description:description || existingTodo.description,
+         updatedAt:new Date().toISOString()
+      }
+      todos.push(updateTodo);
+
+      return res.status(200).json({
+         message:"Todo fully updated",
+         todo:updateTodo
+      })
+
    } catch (error) {
       res.status(500).json({
          message:"server error",
@@ -76,8 +109,9 @@ export const updateToDo=(req,res)=>{
       })
    }
 }
+
 export const updateById=(req,res)=>{
-      try {
+   try {
       
    } catch (error) {
       res.status(500).json({
