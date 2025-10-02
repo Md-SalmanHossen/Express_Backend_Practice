@@ -31,11 +31,12 @@ app.use(express.urlencoded({extended:true}))
 
 
 //root api
-app.use('/api/todos',(req,res)=>{
+app.get('/',(req,res)=>{
    res.status(200).json({
-       message:"welcome to home"
+      message:"welcome to home"
    })
-});
+})
+app.use('/api/todos',router);
 
 //Invalid Route Handling
 app.use(routeNotFound);

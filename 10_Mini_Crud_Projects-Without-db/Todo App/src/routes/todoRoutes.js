@@ -3,7 +3,7 @@ import express from "express";
 
 const router=express.Router();
 
-router.post('/create',todoController.createToDo)
+router.post('/',todoController.createToDo)
 router.get('/',todoController.readAll)
 router.get('/:id',todoController.readById)
 router.patch('/:id',todoController.updateById)
