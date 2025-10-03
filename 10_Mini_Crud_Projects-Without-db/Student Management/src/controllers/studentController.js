@@ -62,13 +62,17 @@ export const createStudent=(req,res)=>{
    }
 } 
 
-export const readAllStudent=()=>{
+export const readAllStudent=(req,res)=>{
    try {
-      
+      return res.status(200).json(students);
    } catch (error) {
-      
+      return res.status(500).json({
+         message:"server error",
+         error:error.message
+      })   
    }
-} 
+}
+
 export const readSingleStudent=()=>{
    try {
       
