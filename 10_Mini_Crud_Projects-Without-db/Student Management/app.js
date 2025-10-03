@@ -6,8 +6,8 @@ import rateLimit from 'express-rate-limit';
 import hpp from 'hpp';
 import helmet from 'helmet';
 
-import notFound from './src/middleware/notFound';
-
+import notFound from './src/middleware/notFound.js';
+import router from './src/routes/studentRoute.js';
 
 const app=express();
 
@@ -42,9 +42,10 @@ app.get('/api/',()=>{
    }
 });
 //routing api
-//app.use('/api/student/');
+app.use('/api/student/',router);
 
-app.use(notFound)
+app.use(notFound);
+
 
 
 export default app;
