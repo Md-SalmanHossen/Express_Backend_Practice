@@ -262,7 +262,21 @@ export const deleteSingleStudent=(req,res)=>{
 
 export const deleteAllStudent=(req,res)=>{
    try {
-      
+      if(students.length==0){
+         return res.status(404).json({
+            message:"student not found to delete"
+         });
+      }
+
+      const deleteStudent=[...students];
+      students.length=0;
+
+      return res.status(200).json({
+         message:"All student delete successfully",
+         deletedCount:deleteStudent.length,
+         deletedStudent:deleteStudent
+      });
+
    } catch (error) {
       res.status(500).json({
          message: "Server error",
