@@ -158,15 +158,74 @@ export const updateStudent=(req,res)=>{
    }
 } 
 
-
-export const updatePartially=()=>{
+export const updatePartially=(req,res)=>{
    try {
-      
+
+      const {id}=req.params;
+      const parsedId=parseInt(id);
+
+      if(isNaN(parsedId)){
+         return res.status(400).json({
+            message:"Invalid id"
+         });
+      };
+
+      const studentIndex=students.findIndex((item)=>item.id===parsedId);
+      if(studentIndex===-1){
+         return res.status(404).json({
+            message:`student with id ${id} not found`
+         })
+      }
+
+      const existingStudent=students[studentIndex];
+      const {name,age,dept,cgpa}=req.body;
+
+      if(!name && !age && !dept && !cgpa){
+         return res.json({
+            message:"At least one field is required for partial update"
+         });
+      };
+
+      const updateStudent={
+         ...existingStudent,
+         updatedAt:new Date().toISOString(),
+      };
+      if(name){
+         updateStudent.name=name;
+      }
+      if(age){
+         const intAge=parseInt(age);
+         if(isNaN(intAge)){
+            return res.status(400).json({
+               message: "Age must be a number"
+            });            
+         }
+         updateStudent.age=intAge;
+      }
+      if(dept){
+         updateStudent.dept=dept;
+      }
+      if(cgpa){
+         const floatCgpa=parseFloat(cgpa);
+         if(isNaN(floatCgpa)){
+            return res.status(400).json({
+               message:"Cgpa must be a number"
+            })
+         }
+         updateStudent.cgpa=floatCgpa;
+      }
+
+      students[studentIndex]=updateStudent;
+
+      return res.status(200).json({
+         message:"Student Partial Information Update Successfully",
+         student:updateStudent
+      });
+
    } catch (error) {
       
    }
 } 
-
 
 export const deleteSingleStudent=()=>{
    try {
