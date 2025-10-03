@@ -227,31 +227,67 @@ export const updatePartially=(req,res)=>{
    }
 } 
 
-export const deleteSingleStudent=()=>{
+export const deleteSingleStudent=(req,res)=>{
+   try {
+      const {id}=req.params;
+      const parseId=parseInt(id);
+
+      if(isNaN(parseId)){
+         return res.status(400).json({
+            message:"Invalid student id"
+         })
+      }
+
+      const index=students.findIndex((item)=>item.id===parseId);
+      if(index===-1){
+         return res.status(404).json({
+            message:"Student not found",
+            
+         });
+      }
+
+      const deleteInfo=students.splice(index,1);
+      return res.status(200).json({
+         message:"Deleted student information successfully",
+         deletedStudent:deleteInfo[0]
+      })
+
+   } catch (error) {
+      res.status(500).json({
+         message: "Server error",
+         error: error.message
+      });     
+   }
+} 
+
+export const deleteAllStudent=(req,res)=>{
    try {
       
    } catch (error) {
-      
+      res.status(500).json({
+         message: "Server error",
+         error: error.message
+      });     
    }
 } 
-export const deleteAllStudent=()=>{
-   try {
-      
-   } catch (error) {
-      
-   }
-} 
-export const searchStudent=()=>{
+
+export const searchStudent=(req,res)=>{
    try {
       //search by id,name and dept
    } catch (error) {
-      
+      res.status(500).json({
+         message: "Server error",
+         error: error.message
+      });     
    }
 } 
-export const sortingStudent=()=>{
+export const sortingStudent=(req,res)=>{
    try {
       
    } catch (error) {
-      //sorting a to z ,by cgpa desc
+      res.status(500).json({
+         message: "Server error",
+         error: error.message
+      });     
    }
 } 
