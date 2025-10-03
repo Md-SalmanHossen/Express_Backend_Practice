@@ -1,15 +1,68 @@
 
-let student=[];
-let studentId=110345;
+let students = [
+   { id: 110345, name: "Rahim", age: 22, dept: "CSE", cgpa: 3.75 },
+   { id: 110346, name: "Karim", age: 21, dept: "EEE", cgpa: 3.40 },
+   { id: 110347, name: "Nishat", age: 23, dept: "BBA", cgpa: 3.90 },
+   { id: 110348, name: "Tonmoy", age: 22, dept: "CSE", cgpa: 3.20 },
+   { id: 110349, name: "Sadia", age: 20, dept: "CSE", cgpa: 3.95 }
+];
 
-export const createStudent=()=>{
+let studentId = 110350; 
+
+export const createStudent=(req,res)=>{
    try {
-      
+
+      const {name,age,dept,cgpa}=req.body;
+
+      if(!name || !age || !dept || !cgpa){
+         return res.status(400).json({
+            message:"All field are required"
+         })
+      }
+
+      const parsedAge=parseInt(age);
+      const parsedCgpa=parseFloat(cgpa)
+
+      if(isNaN(parsedAge) ||isNaN(parsedCgpa)){
+         return res.status(400).json({
+            message:"Age and CGPA must be number",
+         })
+      }
+      if(parsedAge<15 || parsedAge>80){
+         return res.status(200).json({
+            message:"Age must be valid number between 15 to 80"
+         })
+      }
+      if(parsedCgpa<0 || parsedCgpa>4.0){
+         return res.status(200).json({
+            message:"CGPA must be between 0 to 4.0"
+         })
+      }
+      const newStudent={
+         id:++studentId,
+         name:name,
+         dept:dept,
+         age:age,
+         cgpa:cgpa,
+         createdAt: new Date().toISOString()
+      }
+
+      students.push(newStudent);
+
+      return res.status(201).json({
+         message:"Student create successfully",
+         newStudent
+      })
+
    } catch (error) {
-      
+      res.status(500).json({
+         message:"server error",
+         error:error.message
+      })
    }
 } 
-export const readALlStudent=()=>{
+
+export const readAllStudent=()=>{
    try {
       
    } catch (error) {

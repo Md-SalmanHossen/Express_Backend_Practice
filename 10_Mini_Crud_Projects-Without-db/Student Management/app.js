@@ -29,9 +29,9 @@ app.use(express.urlencoded({extended:true}));
 
 
 //root api
-app.get('/api/',()=>{
+app.get('/api/',(req,res)=>{
    try {
-      res.status(200).json({
+      return res.status(200).json({
          message:"welcome to home page"
       });
    }catch (error) {
@@ -41,6 +41,7 @@ app.get('/api/',()=>{
       })
    }
 });
+
 //routing api
 app.use('/api/student/',router);
 

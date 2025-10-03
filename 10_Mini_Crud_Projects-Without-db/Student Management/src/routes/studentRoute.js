@@ -3,10 +3,10 @@ import *as studentController from '../controllers/studentController.js'
 import express from 'express';
 const router=express.Router();
 
-router.post('/:id',studentController.createStudent);
+router.post('/',studentController.createStudent);
 
-router.get('/',studentController.readALlStudent);
-router.get('/:id',studentController.deleteSingleStudent);
+router.get('/',studentController.readAllStudent);
+router.get('/:id',studentController.readSingleStudent);
 
 router.put('/:id',studentController.updateStudent);
 router.patch('/:id',studentController.updatePartially);
