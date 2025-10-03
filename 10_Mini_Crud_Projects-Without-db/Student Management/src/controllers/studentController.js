@@ -64,7 +64,11 @@ export const createStudent=(req,res)=>{
 
 export const readAllStudent=(req,res)=>{
    try {
-      return res.status(200).json(students);
+      return res.status(200).json({
+         message:"Get student successfully",
+         total_student:students.length,
+         students
+      });
    } catch (error) {
       return res.status(500).json({
          message:"server error",
@@ -73,20 +77,88 @@ export const readAllStudent=(req,res)=>{
    }
 }
 
-export const readSingleStudent=()=>{
+export const readSingleStudent=(req,res)=>{
    try {
-      
+
+      const {id}=req.params;
+      const studentFind=students.find((item)=>item.id===parseInt(id));
+
+      if(!studentFind){
+         return res.status(404).json({
+            message:"Student not found"
+         });
+      }else{
+         return res.status(200).json({
+            message:"Fetched Student successfully",
+            student:studentFind
+         })
+      }
    } catch (error) {
-      
+      return res.status(500).json({
+         message: "Server error",
+         error: error.message         
+      })
    }
 } 
-export const updateStudent=()=>{
+
+export const updateStudent=(req,res)=>{
    try {
-      
+
+      const {id}=req.params;
+      const parseId=parseInt(id);
+
+
+      if(isNaN(parseId)){
+         return res.status(400).json({
+            message:"Invalid student Id"
+         })
+      }
+      const index=students.findIndex((item)=>item.id===parseId);
+      if(index===-1){
+         return res.status(404).json({
+            message:`Student with id ${parseId} not found`,
+         });
+      };
+
+      const existingStudent=students[index];
+      const {name,age,dept,cgpa}=req.body;
+
+      if (!name || !age || !dept || !cgpa) {
+         return res.status(400).json({
+            message: "All fields are required for update"
+         });
+      };
+      const intAge=parseInt(age);
+      const floatCgpa=parseFloat(cgpa);
+
+      if(isNaN(intAge ) ||isNaN([floatCgpa])){
+         return res.status(400).json({
+            message:"Age and cgpa must be number"
+         })
+      };
+
+      const updateStudent={
+         ...existingStudent,
+         name:name,
+         age:intAge,
+         dept:dept,
+         cgpa:floatCgpa,
+         updatedAt: new Date().toISOString(),
+      }
+      students[index]=updateStudent;
+      return res.status(200).json({
+         message:"Student Information Update Successfully",
+         student:updateStudent
+      })
    } catch (error) {
-      
+      res.status(500).json({
+         message:"server error",
+         error:error.message
+      })
    }
 } 
+
+
 export const updatePartially=()=>{
    try {
       
@@ -94,6 +166,8 @@ export const updatePartially=()=>{
       
    }
 } 
+
+
 export const deleteSingleStudent=()=>{
    try {
       
