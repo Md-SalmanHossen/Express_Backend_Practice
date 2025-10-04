@@ -6,6 +6,8 @@ import rateLimit from 'express-rate-limit';
 import hpp from 'hpp';
 import helmet from 'helmet';
 
+import notFound from './src/middleware/notFound.js';
+
 const app=express();
 
 //security middleware
@@ -22,7 +24,13 @@ app.use(ratelimiter);
 
 //body parser 
 app.use(express.json());
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({
+   extended:true
+}));
+
+
+//route handling
+app.use(notFound);
 
 
 
