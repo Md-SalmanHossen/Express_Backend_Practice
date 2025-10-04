@@ -7,6 +7,7 @@ import hpp from 'hpp';
 import helmet from 'helmet';
 
 import notFound from './src/middleware/notFound.js';
+import router from './src/routes/bookStoreApi.js';
 
 const app=express();
 
@@ -28,6 +29,7 @@ app.use(express.urlencoded({
    extended:true
 }));
 
+app.use('/api/bookstore/',router);
 
 //route handling
 app.use(notFound);
