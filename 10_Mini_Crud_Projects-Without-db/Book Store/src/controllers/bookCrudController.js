@@ -1,5 +1,5 @@
 
-import db from "../database/db.js"
+import books from "../database/db.js"
 
 export const createBook=(req,res)=>{
    try {
@@ -23,7 +23,10 @@ export const readSingleBook=(req,res)=>{
 }
 export const readAllBook=(req,res)=>{
    try {
-      
+      res.status(200).json({
+         message:"Fetched student successfully",
+         details:books
+      })
    } catch (error) {
       res.status(500).json({
          message:"server error",
