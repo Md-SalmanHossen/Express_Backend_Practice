@@ -1,4 +1,6 @@
 
+import db from "../database/db.js"
+
 export const createBook=(req,res)=>{
    try {
       
@@ -70,4 +72,3 @@ export const DeleteAllBook=(req,res)=>{
    }
 }
 
-export default crudBookController.js;
