@@ -1,7 +1,6 @@
 
 
 import books from "../database/db.js"
-import { type } from 'os';
 let id="25";
 
 export const createBook=(req,res)=>{
@@ -90,6 +89,7 @@ export const createBook=(req,res)=>{
       })
    }
 }
+
 export const readSingleBook=(req,res)=>{
    try {
       const {id}=req.params;
@@ -110,6 +110,7 @@ export const readSingleBook=(req,res)=>{
       })
    }
 }
+
 export const readAllBook=(req,res)=>{
    try {
       res.status(200).json({
@@ -124,6 +125,7 @@ export const readAllBook=(req,res)=>{
       })
    }
 }
+
 export const updateBook=(req,res)=>{
    try {
 
@@ -210,17 +212,130 @@ export const updateBook=(req,res)=>{
       })
    }
 }
-export const updateBookPartially=(req,res)=>{
-   try {
-      const {id}=req.params;
-      
-   } catch (error) {
-      res.status(500).json({
-         message:"server error",
-         error:error.message
-      })
-   }
-}
+
+export const updateBookPartially = (req, res) => {
+  try {
+    const { id } = req.params;
+    const bookIndex = books.findIndex((item) => item.id === id);
+
+    if (bookIndex === -1) {
+      return res.status(404).json({
+        status: "Failed",
+        message: `Book not found with id ${id}`,
+      });
+    }
+
+    const updateBook = books[bookIndex];
+
+    const {
+      title,
+      author,
+      price,
+      category,
+      description,
+      publishedYear,
+      isFeatured,
+      stock,
+      rating,
+    } = req.body;
+
+    if (title !== undefined) {
+      if (typeof title !== "string" || title.trim() === "") {
+        return res.status(400).json({
+          message: "Title is required and must be a non-empty string",
+        });
+      }
+      updateBook.title = title.trim();
+    }
+
+    if (author !== undefined) {
+      if (typeof author !== "string" || author.trim() === "") {
+        return res.status(400).json({
+          message: "Author is required and must be a non-empty string",
+        });
+      }
+      updateBook.author = author.trim();
+    }
+
+    if (category !== undefined) {
+      if (typeof category !== "string" || category.trim() === "") {
+        return res.status(400).json({
+          message: "Category must be a non-empty string",
+        });
+      }
+      updateBook.category = category.trim();
+    }
+
+    if (price !== undefined) {
+      if (typeof price !== "number" || price < 0) {
+        return res.status(400).json({
+          message: "Price must be a positive number",
+        });
+      }
+      updateBook.price = price;
+    }
+
+    if (description !== undefined) {
+      if (typeof description !== "string") {
+        return res.status(400).json({
+          message: "Description must be a string",
+        });
+      }
+      updateBook.description = description;
+    }
+
+    if (stock !== undefined) {
+      if (typeof stock !== "number" ||stock < 0 ||!Number.isInteger(stock)) {
+        return res.status(400).json({
+          message: "Stock must be a positive integer",
+        });
+      }
+      updateBook.stock = stock;
+    }
+
+    if (rating !== undefined) {
+      if (typeof rating !== "number" || rating < 0 || rating > 5) {
+        return res.status(400).json({
+          message: "Rating must be between 0 and 5",
+        });
+      }
+      updateBook.rating = rating;
+    }
+
+    if (publishedYear !== undefined) {
+      if (typeof publishedYear !== "number" ||!Number.isInteger(publishedYear) ||publishedYear < 1000) {
+        return res.status(400).json({
+          message: "Published year must be a valid integer (e.g., 2024)",
+        });
+      }
+      updateBook.publishedYear = publishedYear;
+    }
+
+    if (isFeatured !== undefined) {
+      if (typeof isFeatured !== "boolean") {
+        return res.status(400).json({
+          message: "isFeatured must be a boolean (true or false)",
+        });
+      }
+      updateBook.isFeatured = isFeatured;
+    }
+
+    books[bookIndex] = updateBook;
+
+    return res.status(200).json({
+      status: "Success",
+      message: `Book with id ${id} updated successfully`,
+      data: updateBook,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: "Server error",
+      error: error.message,
+    });
+  }
+};
+
+
 export const deleteSingleBook=(req,res)=>{
    try {
       const {id}=req.params;
@@ -242,6 +357,7 @@ export const deleteSingleBook=(req,res)=>{
       })
    }
 }
+
 export const DeleteAllBook=(req,res)=>{
    try {
 
