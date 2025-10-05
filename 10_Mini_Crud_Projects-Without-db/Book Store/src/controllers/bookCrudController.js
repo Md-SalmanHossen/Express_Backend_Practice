@@ -1,9 +1,50 @@
 
+import { type } from "os";
 import books from "../database/db.js"
+import {randomUUID} from 'crypto'
+let id="25";
 
 export const createBook=(req,res)=>{
    try {
-      
+      const {title,author,category,price,description,publishedYear,isFeatured,stock,rating}=req.body;
+
+      if(!title || !author || !price || !category){
+         return res.status(400).json({
+            status:"Information Missing",
+            message:"Title,author,category,price are required"
+         });
+      };
+
+      if(!title || typeof title !=='string' || title.trim()===''){
+         return res.status(400).json({
+            message:"Title is require and must be not empty string"
+         })
+      };
+
+      if(!author || typeof author !=='string' || author.trim()===''){
+         return res.status(400).json({
+            message:"Title is require and must be not empty string"
+         });
+      }
+      const newBook={
+         id:++id,
+         title,
+         author,
+         category,
+         price,
+         description:(description &&(description)),
+         publishedYear:publishedYear || null,
+         isFeatured: isFeatured || false,
+         stock:stock || 0,
+         rating:rating || 0,
+      }
+      books.push(newBook);
+      return res.status(201).json({
+         status:'Create',
+         message:"Book Create Successfully",
+         book_details:newBook,
+      })
+
    } catch (error) {
       res.status(500).json({
          message:"server error",
