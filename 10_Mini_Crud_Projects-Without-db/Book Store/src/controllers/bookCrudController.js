@@ -1,7 +1,6 @@
 
-import { type } from "os";
+
 import books from "../database/db.js"
-import {randomUUID} from 'crypto'
 let id="25";
 
 export const createBook=(req,res)=>{
@@ -15,17 +14,54 @@ export const createBook=(req,res)=>{
          });
       };
 
-      if(!title || typeof title !=='string' || title.trim()===''){
+      if(typeof title !=='string' || title.trim()===''){
          return res.status(400).json({
             message:"Title is require and must be not empty string"
          })
       };
 
-      if(!author || typeof author !=='string' || author.trim()===''){
+      if(typeof author !=='string' || author.trim()===''){
          return res.status(400).json({
-            message:"Title is require and must be not empty string"
+            message:"Author is require and must be not empty string"
          });
       }
+
+      if(typeof category !=='string' || category.trim()===''){
+         return res.status(400).json({
+            message:"Category is require and must be not empty string"
+         });
+      }
+
+      if(typeof price !=='number' || price<0){
+         return res.status(400).json({
+            message:"Price is require and must be positive number"
+         });
+      }
+
+      if(stock !==undefined && (typeof stock !=="number" || stock<0) || !Number.isInteger(stock)){
+         return res.status(400).json({
+            message:"Stock must be positive number"
+         });
+      }
+
+      if(rating !== undefined && (typeof rating !=='number' || rating>5 || rating<0)){
+         return res.status(400).json({
+            message:"Rating must be positive number and 0 to 5"
+         });
+      }
+
+      if(publishedYear !==undefined && (typeof publishedYear !=='number' || !Number.isInteger(publishedYear) || publishedYear<1000)){
+         return res.status(400).json({
+            message:"Published year must be positive an integer"
+         });
+      }
+      
+      if(isFeatured !==undefined && typeof isFeatured !=='boolean'){
+         return res.status(400).json({
+            message:"isFeatured must be Boolean.(true or false)"
+         });
+      }
+
       const newBook={
          id:++id,
          title,
