@@ -37,8 +37,12 @@ export const searchBook=(req,res)=>{
 
 export const sortBooks=(req,res)=>{
    try {
-      // sorting by low-high or high-low price,a-z
+      const {sortBy,order='asc'}=req.query;
+      let sortedBooks=[...books];
 
+      if(sortBy==='price'){
+         sortBooks.sort((a,b)=>order==='desc'?b.price-a.price :a.price-b.price)
+      }
    } catch (error) {
       res.status(500).json({
          message:"server error",
@@ -69,6 +73,7 @@ export const paginateBook=(req,res)=>{
       })
    }
 }
+
 export const getTopRateBooks=(req,res)=>{
    try {
       
