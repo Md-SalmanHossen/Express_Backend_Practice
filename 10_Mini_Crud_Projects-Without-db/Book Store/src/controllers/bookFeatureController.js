@@ -46,6 +46,7 @@ export const sortBooks=(req,res)=>{
       })
    }
 }
+
 export const filterBooks=(req,res)=>{
    try {
       // filter by range and category
@@ -57,6 +58,7 @@ export const filterBooks=(req,res)=>{
       })
    }
 }
+
 export const paginateBook=(req,res)=>{
    try {
       
@@ -77,9 +79,18 @@ export const getTopRateBooks=(req,res)=>{
       })
    }
 }
+
 export const recommendationBooks=(req,res)=>{
    try {
-      
+      const recommended=books.filter(item=>item.isFeatured===true)
+      .sort((a,b)=>b.rating-a.rating);
+
+      res.status(200).json({
+         status:'Success',
+         message:recommended.length>0?"Recommended books found" :"No recommended books available",
+         count:recommended.length,
+         books:recommended
+      })
    } catch (error) {
       res.status(500).json({
          message:"server error",
