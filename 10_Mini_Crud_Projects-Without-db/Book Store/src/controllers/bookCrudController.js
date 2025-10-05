@@ -1,6 +1,7 @@
 
 
 import books from "../database/db.js"
+import { type } from 'os';
 let id="25";
 
 export const createBook=(req,res)=>{
@@ -55,7 +56,7 @@ export const createBook=(req,res)=>{
             message:"Published year must be positive an integer"
          });
       }
-      
+
       if(isFeatured !==undefined && typeof isFeatured !=='boolean'){
          return res.status(400).json({
             message:"isFeatured must be Boolean.(true or false)"
@@ -73,6 +74,7 @@ export const createBook=(req,res)=>{
          isFeatured: isFeatured || false,
          stock:stock || 0,
          rating:rating || 0,
+         createdAt:new Date().toISOString()
       }
       books.push(newBook);
       return res.status(201).json({
@@ -124,7 +126,83 @@ export const readAllBook=(req,res)=>{
 }
 export const updateBook=(req,res)=>{
    try {
+
+      const {id}=req.params;
+      const bookIndex=books.findIndex((item)=>item.id===id);
+      if(bookIndex===-1){
+         return res.status(404).json({
+            message:`Book not fount with id : ${id}`
+         })
+      }
       
+      const {title,author,price,category,description,publishedYear,isFeatured,stock,rating}=req.body;
+      if(!title || !author || !price || !category){
+         return res.status(400).json({
+            status:"Missing Information",
+            message:"Title,author,category and price are require"
+         })
+      }
+      if(typeof title !=='string' || title.trim()===''){
+         return res.status(400).json({
+            message:"Title is require and must be not empty string"
+         })
+      };
+      if(typeof author !=='string' || author.trim()===''){
+         return res.status(400).json({
+            message:"Author is require and must be not empty string"
+         })
+      };
+      if(typeof category !=='string' || category.trim()===''){
+         return res.status(400).json({
+            message:"Category is require and must be not empty string"
+         })
+      };
+      if(typeof price!=='number' ||price<0){
+         return res.status(400).json({
+            message: "Price must be a positive number"
+         });
+      }
+      if(stock!==undefined &&(typeof stock !=='number' ||stock<0 || !Number.isInteger(stock)) ){
+         return res.status(400).json({
+            message:"Stock must be a positive integer"
+         })
+      }
+      if(publishedYear !==undefined &&(typeof publishedYear !=='number'|| !Number.isInteger(publishedYear) || publishedYear<1000)){
+         return res.status(400).json({
+            message:`Published year must be number and valid date from 1000 to ${new Date().getFullYear()}`
+         });
+      }
+
+      if(isFeatured!==undefined  &&typeof isFeatured !=='boolean'){
+         return res.status(400).json({
+            message: "isFeatured must be a boolean (true or false)"
+         });
+      }
+      if(rating !==undefined &&(typeof rating !=='number' || rating <0 ||rating>5)){
+         return res.status(400).json({
+            message: "Rating must be a number between 0 to 5."
+         });
+      }
+      let updateBooksInfo={
+         id:id,
+         title,
+         author,
+         price,
+         description:(description && (description)),
+         publishedYear:publishedYear || null,
+         isFeatured:isFeatured || false,
+         stock:stock || 0,
+         rating:rating || 0,
+         updatedAt:new Date().toISOString()
+      }
+
+      books[bookIndex]=updateBooksInfo;
+      return res.status(200).json({
+         status:"Update",
+         message:"Updated Books information successfully",
+         update_information:updateBooksInfo
+      });
+
    } catch (error) {
       res.status(500).json({
          message:"server error",
@@ -134,6 +212,7 @@ export const updateBook=(req,res)=>{
 }
 export const updateBookPartially=(req,res)=>{
    try {
+      const {id}=req.params;
       
    } catch (error) {
       res.status(500).json({
