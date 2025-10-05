@@ -1,7 +1,8 @@
 
 
 import books from "../database/db.js"
-let id="25";
+let id=books.length;
+console.log(id);
 
 export const createBook=(req,res)=>{
    try {
@@ -334,7 +335,6 @@ export const updateBookPartially = (req, res) => {
     });
   }
 };
-
 
 export const deleteSingleBook=(req,res)=>{
    try {
