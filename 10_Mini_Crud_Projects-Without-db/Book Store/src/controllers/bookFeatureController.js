@@ -84,8 +84,35 @@ export const sortBooks=(req,res)=>{
 
 export const filterBooks=(req,res)=>{
    try {
-      // filter by range and category
       
+      const {minPrice,maxPrice,category}=req.query;
+      let filteredBook=[...books];
+
+      if(minPrice || maxPrice){
+         const min=parseFloat(minPrice) ||0;
+         const max=parseFloat(maxPrice) || Infinity;
+
+         filteredBook=filteredBook.filter(item=>item.price>=min && item.price<=max)
+      }
+
+      if(category){
+         filteredBook=filteredBook.filter(item=>item.category.toLowerCase()===category.trim().toLowerCase())
+      }
+
+      if(filteredBook.length===0){
+         return res.status(404).json({
+            status:"Not Found",
+            message:'No Books found matching your filters'
+         })
+      }
+
+      return res.status(200).json({
+         status:"Success",
+         message:'Books filtered successfully',
+         total:filteredBook.length,
+         data:filteredBook
+      })
+
    } catch (error) {
       res.status(500).json({
          message:"server error",
