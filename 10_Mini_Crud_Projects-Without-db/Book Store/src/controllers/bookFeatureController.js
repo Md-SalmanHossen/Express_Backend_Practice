@@ -46,7 +46,7 @@ export const sortBooks=(req,res)=>{
          })
       }
 
-      if(!['price','title'].includes(order)){
+      if(!['asc','desc'].includes(order)){
          return res.status(400).json({
             message:"Invalid",
             message:"Invalid 'order' parameter. Use asc or desc"
@@ -71,6 +71,7 @@ export const sortBooks=(req,res)=>{
       return res.status(200).json({
          status:"Successfully",
          message:`Books sorted by ${sortBy} in ${order}`,
+         total_book:books.length,
          data:sortedBooks
       })
    } catch (error) {
