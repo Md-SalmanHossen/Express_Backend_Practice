@@ -4,7 +4,8 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import hpp from 'hpp';
 import helmet from 'helmet';
-import notFound from './src/middleware/notFound.js';
+import notFound from './src/middlewares/notFound.js';
+import router from './src/routes/restaurantApi.js';
 
 const app=express();
 
@@ -24,7 +25,7 @@ app.use(express.urlencoded({
    extended:true
 }))
 
-
+app.use('/restaurant/api/',router)
 app.use(notFound);
 
 export default app;
