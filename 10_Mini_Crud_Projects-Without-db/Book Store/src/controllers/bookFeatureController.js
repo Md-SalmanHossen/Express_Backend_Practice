@@ -128,15 +128,15 @@ export const paginateBook=(req,res)=>{
       const parsedPage=parseInt(page);
       const parsedLimit=parseInt(limit);
 
-      if(!isNaN(parsedPage) || page<1) page=1;
-      if(isNaN(limit)||limit<1) limit =5;
+      if(isNaN(parsedPage) || parsedPage<1) parsedPage=1;
+      if(isNaN(parsedLimit)||parsedLimit<1) parsedLimit =5;
 
-      const startIndex=(page-1)*limit;
-      const endIndex=startIndex+limit;
+      const startIndex=(parsedPage-1)*parsedLimit;
+      const endIndex=startIndex+parsedLimit;
 
-      const paginatedBooks=books.splice(startIndex,endIndex);
+      const paginatedBooks=books.slice(startIndex,endIndex);
 
-      if(paginatedBooks.length==0){
+      if(paginatedBooks.length===0){
          return res.status(404).json({
             status:"Not Found",
             message:"No books found for this page"
@@ -145,10 +145,10 @@ export const paginateBook=(req,res)=>{
 
       return res.status(200).json({
          status:"Success",
-         page,
-         limit,
+         page:parsedPage,
+         limit:parsedLimit,
          total_book:books.length,
-         total_pages:Math.ceil(books.length/limit),
+         total_pages:Math.ceil(books.length/parsedLimit),
          data:paginatedBooks
       })
    } catch (error) {
@@ -162,13 +162,21 @@ export const paginateBook=(req,res)=>{
 export const getTopRateBooks=(req,res)=>{
    try {
 
-      let {limit=5}=req.query;
-      limit =parseInt(limit);
+      const {limit=5}=req.query;
+      const parsedLimit =parseInt(limit);
 
-      if(isNaN(limit)|| limit<1) limit=5;
-
-      const topRated=[...books];
-      topRated=topRated.sort((a,b)=>b.rating-a.rating).splice(0,limit);
+      if(isNaN(parsedLimit) || parsedLimit<1){
+         return res.status(400).json({
+            status: "Invalid",
+            message: "'limit' must be a greater than 0",
+         });
+      }
+      if(parsedLimit<1)parsedLimit=1;
+      if(parsedLimit>50) parsedLimit=50;
+      let topRated=[...books];
+      topRated=topRated
+      .sort((a,b)=>b.rating-a.rating)
+      .slice(0,parsedLimit);
 
       if(topRated.length==0){
          return res.status(404).json({
@@ -179,7 +187,7 @@ export const getTopRateBooks=(req,res)=>{
 
       return res.status(200).json({
          status:"Success",
-         limit,
+         limit:parsedLimit,
          data:topRated
       })
 
