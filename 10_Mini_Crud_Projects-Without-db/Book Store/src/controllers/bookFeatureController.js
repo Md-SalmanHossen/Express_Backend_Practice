@@ -37,12 +37,42 @@ export const searchBook=(req,res)=>{
 
 export const sortBooks=(req,res)=>{
    try {
-      const {sortBy,order='asc'}=req.query;
+      const { sortBy,order='asc'}=req.query;
+
+      if(!sortBy || !['price','title'].includes(sortBy)){
+         return res.status(400).json({
+            status:"Invalid",
+            message:"Invalid 'sortBy' parameter.Use 'price' or 'title'"
+         })
+      }
+
+      if(!['price','title'].includes(order)){
+         return res.status(400).json({
+            message:"Invalid",
+            message:"Invalid 'order' parameter. Use asc or desc"
+         });
+      }
+
       let sortedBooks=[...books];
 
       if(sortBy==='price'){
-         sortBooks.sort((a,b)=>order==='desc'?b.price-a.price :a.price-b.price)
+         sortedBooks.sort((a,b)=>{
+            order==='desc'?
+            b.price-a.price 
+            :a.price-b.price
+         })
+      }else if(sortBy==='title'){
+         sortedBooks.sort((a,b)=>{
+            order==='desc'? 
+            b.title.localeCompare(a.title)
+            :a.title.localeCompare(b.title)
+         })
       }
+      return res.status(200).json({
+         status:"Successfully",
+         message:`Books sorted by ${sortBy} in ${order}`,
+         data:sortedBooks
+      })
    } catch (error) {
       res.status(500).json({
          message:"server error",
