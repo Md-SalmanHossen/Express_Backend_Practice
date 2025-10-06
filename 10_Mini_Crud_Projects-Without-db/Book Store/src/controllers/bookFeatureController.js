@@ -123,7 +123,34 @@ export const filterBooks=(req,res)=>{
 
 export const paginateBook=(req,res)=>{
    try {
-      
+
+      const {page=1,limit=5}=req.query;
+      const parsedPage=parseInt(page);
+      const parsedLimit=parseInt(limit);
+
+      if(!isNaN(parsedPage) || page<1) page=1;
+      if(isNaN(limit)||limit<1) limit =5;
+
+      const startIndex=(page-1)*limit;
+      const endIndex=startIndex+limit;
+
+      const paginatedBooks=books.splice(startIndex,endIndex);
+
+      if(paginatedBooks.length==0){
+         return res.status(404).json({
+            status:"Not Found",
+            message:"No books found for this page"
+         })
+      }
+
+      return res.status(200).json({
+         status:"Success",
+         page,
+         limit,
+         total_book:books.length,
+         total_pages:Math.ceil(books.length/limit),
+         data:paginatedBooks
+      })
    } catch (error) {
       res.status(500).json({
          message:"server error",
