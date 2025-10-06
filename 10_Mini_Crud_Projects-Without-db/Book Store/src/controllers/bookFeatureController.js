@@ -134,7 +134,28 @@ export const paginateBook=(req,res)=>{
 
 export const getTopRateBooks=(req,res)=>{
    try {
-      
+
+      let {limit=5}=req.query;
+      limit =parseInt(limit);
+
+      if(isNaN(limit)|| limit<1) limit=5;
+
+      const topRated=[...books];
+      topRated=topRated.sort((a,b)=>b.rating-a.rating).splice(0,limit);
+
+      if(topRated.length==0){
+         return res.status(404).json({
+            status:"Not found",
+            message:"No books Found"
+         });
+      };
+
+      return res.status(200).json({
+         status:"Success",
+         limit,
+         data:topRated
+      })
+
    } catch (error) {
       res.status(500).json({
          message:"server error",
