@@ -6,8 +6,9 @@ import helmet from 'helmet';
 import mongoSanitize from 'express-mongo-sanitize';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
-import notFound from './src/middlewares/notFound.js';
 
+import notFound from './src/middlewares/notFound.js';
+import router from './src/routes/bookStoreApi.js'
 
 const app=express();
 
@@ -20,13 +21,13 @@ const rateLimiter=rateLimit({
    max:1000
 });
 app.use(rateLimiter);
+app.use(mongoSanitize());
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))
-app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json());
-app.use(mongoSanitize());
 
-app.use(notFound)
+app.use('/bookstore/api/',router);
+app.use(notFound);
 
 export default app;

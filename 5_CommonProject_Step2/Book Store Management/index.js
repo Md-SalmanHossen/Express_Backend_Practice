@@ -5,7 +5,7 @@ import connectDB from "./src/utils/dbConnection.js";
 dotenv.config();
 connectDB();
 
-const PORT=process.env.PORT || 5555;
+const PORT=process.env.PORT || 5000;
 
 app.listen(PORT,()=>{
    console.log(`Server is running on ${PORT}`);
