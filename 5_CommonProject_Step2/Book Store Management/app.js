@@ -4,6 +4,7 @@ import cors from 'cors';
 import hpp from 'hpp';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
+import notFound from './src/middlewares/notFound';
 
 const app=express();
 
@@ -21,5 +22,6 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}))
 
 
+app.use(notFound)
 
 export default app;
