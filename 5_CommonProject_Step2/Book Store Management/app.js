@@ -4,7 +4,7 @@ import cors from 'cors';
 import hpp from 'hpp';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
-import notFound from './src/middlewares/notFound';
+import notFound from './src/middlewares/notFound.js';
 
 const app=express();
 
