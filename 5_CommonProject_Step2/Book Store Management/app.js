@@ -21,13 +21,15 @@ const rateLimiter=rateLimit({
    max:1000
 });
 app.use(rateLimiter);
-app.use(mongoSanitize());
+
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))
-app.use(bodyParser.json());
 
-app.use('/bookstore/api/',router);
+app.use(mongoSanitize());
+
+
+app.use('/api/bookstore/',router);
 app.use(notFound);
 
 export default app;
