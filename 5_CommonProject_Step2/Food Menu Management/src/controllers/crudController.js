@@ -17,3 +17,20 @@ export const createFoodMenu=async(req,res)=>{
    }
 }
 
+export const readAllFoodMenu=async(req,res)=>{
+   try {
+      const allFod=await FoodMenu.find();
+      res.status(201).json({
+         success:true,
+         message:true,
+         data:allFod
+      })
+   } catch (error) {
+      res.status(500).json({
+         success:false,
+         message:"Failed to fetch food item",
+         error:error.message,
+      })
+   }
+}
+
