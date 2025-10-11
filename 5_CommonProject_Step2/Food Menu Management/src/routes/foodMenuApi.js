@@ -3,5 +3,6 @@ import express from 'express';
 const router=express.Router();
 
 router.post('/',crudController.createFoodMenu);
+router.get('/',crudController.readAllFoodMenu);
 
 export default router;

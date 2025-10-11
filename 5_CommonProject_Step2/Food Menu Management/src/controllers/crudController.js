@@ -1,8 +1,8 @@
-import FoodMenu from "../models/foodMenu.js";
+import foodMenu from "../models/foodMenu.js";
 
 export const createFoodMenu=async(req,res)=>{
    try {
-      const newFood=await FoodMenu.create(req.body);
+      const newFood=await foodMenu.create(req.body);
       res.status(201).json({
          success:true,
          message:true,
@@ -19,7 +19,7 @@ export const createFoodMenu=async(req,res)=>{
 
 export const readAllFoodMenu=async(req,res)=>{
    try {
-      const allFod=await FoodMenu.find();
+      const allFod=await foodMenu.find();
       res.status(201).json({
          success:true,
          message:true,
@@ -27,10 +27,34 @@ export const readAllFoodMenu=async(req,res)=>{
       })
    } catch (error) {
       res.status(500).json({
-         success:false,
+         status:"Failed",
          message:"Failed to fetch food item",
          error:error.message,
       })
    }
 }
 
+export const readSingleFoodMenu=async(req,res)=>{
+   try {
+      const foodId=req.params.id;
+      const singleFood=await foodMenu.findById(foodId);
+
+      if(!singleFood){
+         return res.status(404).json({
+            status:"Not Found",
+            message:"Food item not found"
+         })
+      }
+      res.status(200).json({
+         status:"Success",
+         data:singleFood
+      })
+
+   } catch (error) {
+      res.status(500).json({
+         status:error,
+         message:"Failed to fetch data",
+         error:error.message
+      })
+   }
+}

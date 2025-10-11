@@ -4,11 +4,10 @@ import cors from 'cors';
 import hpp from 'hpp';
 import helmet from 'helmet';
 import mongoSanitize from 'express-mongo-sanitize';
-import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 
 import notFound from './src/middlewares/notFound.js';
-import router from './src/routes/bookStoreApi.js'
+import router from './src/routes/foodMenuApi.js'
 
 const app=express();
 
@@ -29,7 +28,7 @@ app.use(express.urlencoded({extended:true}))
 //app.use(mongoSanitize());
 
 
-app.use('/api/bookstore',router);
+app.use('/api/foodMenu',router);
 app.use(notFound);
 
 export default app;
