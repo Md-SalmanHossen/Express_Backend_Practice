@@ -38,7 +38,7 @@ const foodMenuSchema=new mongoose.Schema({
       default:false
    }
 },{
-   timesStamps:true
+   timestamps:true
 })
 
 const FoodMenu=mongoose.model('foodMenu',foodMenuSchema);

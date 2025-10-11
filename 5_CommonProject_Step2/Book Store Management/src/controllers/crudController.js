@@ -9,7 +9,7 @@ export const createFoodMenu=async(req,res)=>{
          data:newFood
       })
    } catch (error) {
-      res.status(200).json({
+      res.status(500).json({
          success:false,
          message:"Failed to create item",
          error:error.message,

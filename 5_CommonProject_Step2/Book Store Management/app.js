@@ -26,10 +26,10 @@ app.use(rateLimiter);
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))
 
-app.use(mongoSanitize());
+//app.use(mongoSanitize());
 
 
-app.use('/api/bookstore/',router);
+app.use('/api/bookstore',router);
 app.use(notFound);
 
 export default app;

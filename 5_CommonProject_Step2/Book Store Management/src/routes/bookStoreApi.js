@@ -2,6 +2,6 @@ import *as crudController from '../controllers/crudController.js'
 import express from 'express';
 const router=express.Router();
 
-router.get('/',crudController.createFoodMenu);
+router.post('/',crudController.createFoodMenu);
 
 export default router;
