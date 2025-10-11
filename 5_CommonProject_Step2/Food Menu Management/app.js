@@ -23,9 +23,9 @@ app.use(rateLimiter);
 
 
 app.use(express.json());
+app.use(mongoSanitize());
 app.use(express.urlencoded({extended:true}))
 
-//app.use(mongoSanitize());
 
 
 app.use('/api/foodMenu',router);
