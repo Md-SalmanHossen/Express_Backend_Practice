@@ -3,8 +3,6 @@ import rateLimit from 'express-rate-limit';
 import cors from 'cors';
 import hpp from 'hpp';
 import helmet from 'helmet';
-//import mongoSanitize from 'express-mongo-sanitize';
-//import mongoSanitize from 'mongodb-sanitize'
 import cookieParser from 'cookie-parser';
 
 import notFound from './src/middlewares/notFound.js';
@@ -26,8 +24,6 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}))
 
 
-
-//app.use(mongoSanitize());
 
 app.use('/api/foodMenu',router);
 app.use(notFound);
