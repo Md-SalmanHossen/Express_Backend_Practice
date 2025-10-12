@@ -69,6 +69,14 @@ export const updateFoodMenu=async(req,res)=>{
             message:"Update data is not valid"
          });
       }
+
+      const updateItem= await foodMenu.findByIdAndUpdate(
+         id,
+         {$set:updateField},
+         {new:true,runValidators:true}
+      );
+
+      
    } catch (error) {
       res.status(500).json({
          message:"Server error",
