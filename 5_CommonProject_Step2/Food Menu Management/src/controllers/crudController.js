@@ -87,8 +87,20 @@ export const updateFoodMenu=async(req,res)=>{
          message:"Updated Successfully",
          data:updateItem
       });
-      
+
    } catch (error) {
+      if(error.name==='CastError'){
+         res.status(400).json({
+            message:"id formate wrong",
+            error:error.message
+         })
+         if(error.name==='ValidationError'){
+            res.status(400).json({
+               message:"Invalid data provided",
+               error:error.message
+            })
+         }
+      }
       res.status(500).json({
          message:"Server error",
          error:error.message,
