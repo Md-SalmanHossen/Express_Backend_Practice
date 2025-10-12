@@ -76,6 +76,17 @@ export const updateFoodMenu=async(req,res)=>{
          {new:true,runValidators:true}
       );
 
+      if(!updateItem){
+         return res.status(404).json({
+            status:"Not Found",
+            message:"Menu item not found"
+         })
+      };
+      res.status(200).json({
+         status:"Success",
+         message:"Updated Successfully",
+         data:updateItem
+      });
       
    } catch (error) {
       res.status(500).json({
