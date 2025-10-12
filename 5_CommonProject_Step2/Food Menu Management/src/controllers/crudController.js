@@ -1,8 +1,8 @@
-import foodMenu from "../models/foodMenu.js";
+import FoodMenu from "../models/foodMenu.js";
 
 export const createFoodMenu=async(req,res)=>{
    try {
-      const newFood=await foodMenu.create(req.body);
+      const newFood=await FoodMenu.create(req.body);
       res.status(201).json({
          success:true,
          message:true,
@@ -19,7 +19,7 @@ export const createFoodMenu=async(req,res)=>{
 
 export const readAllFoodMenu=async(req,res)=>{
    try {
-      const allFod=await foodMenu.find();
+      const allFod=await FoodMenu.find();
       res.status(201).json({
          success:true,
          message:true,
@@ -37,7 +37,7 @@ export const readAllFoodMenu=async(req,res)=>{
 export const readSingleFoodMenu=async(req,res)=>{
    try {
       const foodId=req.params.id;
-      const singleFood=await foodMenu.findById(foodId);
+      const singleFood=await FoodMenu.findById(foodId);
 
       if(!singleFood){
          return res.status(404).json({
@@ -61,6 +61,7 @@ export const readSingleFoodMenu=async(req,res)=>{
 
 export const updateFoodMenu=async(req,res)=>{
    try {
+
       const {id}=req.params;
       const updateField=req.body;
 
@@ -70,7 +71,7 @@ export const updateFoodMenu=async(req,res)=>{
          });
       }
 
-      const updateItem= await foodMenu.findByIdAndUpdate(
+      const updateItem= await FoodMenu.findByIdAndUpdate(
          id,
          {$set:updateField},
          {new:true,runValidators:true}
@@ -90,16 +91,16 @@ export const updateFoodMenu=async(req,res)=>{
 
    } catch (error) {
       if(error.name==='CastError'){
-         res.status(400).json({
-            message:"id formate wrong",
+         return res.status(400).json({
+            message:"Invalid id formate wrong",
             error:error.message
          })
-         if(error.name==='ValidationError'){
-            res.status(400).json({
-               message:"Invalid data provided",
-               error:error.message
-            })
-         }
+      }
+      if(error.name==='ValidationError'){
+         return res.status(400).json({
+            message:"Invalid data provided",
+            error:error.message
+         })
       }
       res.status(500).json({
          message:"Server error",

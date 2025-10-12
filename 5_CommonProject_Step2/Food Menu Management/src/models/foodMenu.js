@@ -17,7 +17,8 @@ const foodMenuSchema=new mongoose.Schema({
    },
    category:{
       type:String,
-      required:[true,'Please provide a category']
+      required:[true,'Please provide a category'],
+      lowercase:true,
    },
    imageUrl:{
       type:String,

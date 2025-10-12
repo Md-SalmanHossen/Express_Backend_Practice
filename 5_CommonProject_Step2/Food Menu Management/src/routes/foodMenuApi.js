@@ -5,6 +5,7 @@ const router=express.Router();
 router.post('/',crudController.createFoodMenu);
 router.get('/',crudController.readAllFoodMenu);
 router.get('/:id',crudController.readSingleFoodMenu);
+console.log(crudController.updateFoodMenu);
 router.put('/:id',crudController.updateFoodMenu);
 
 
