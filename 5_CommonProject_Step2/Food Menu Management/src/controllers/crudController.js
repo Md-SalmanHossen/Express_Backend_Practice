@@ -150,7 +150,6 @@ export const deleteAllMenu=async(req,res)=>{
          status:"Success",
          message:"All data deleted",
          delete_count:deleteAllMenu.length,
-         deleted_data:deleteAllMenu
       })
 
    } catch (error) {
