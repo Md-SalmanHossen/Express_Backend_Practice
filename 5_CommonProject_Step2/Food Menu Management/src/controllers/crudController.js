@@ -111,6 +111,21 @@ export const updateFoodMenu=async(req,res)=>{
 
 export const deleteSingleMenu=async(req,res)=>{
    try {
+      const {id}=req.params;
+      const deleteMenu=await FoodMenu.findByIdAndDelete(id); 
+
+      if(!deleteMenu){
+         return res.status(404).json({
+            status:"Not Found",
+            message:"Menu not found"
+         })
+      }
+
+      res.status(200).json({
+         status:"Success",
+         message:"User deleted",
+         deleted_data:deleteMenu
+      });
       
    } catch (error) {
       res.status(500).json({
