@@ -109,3 +109,14 @@ export const updateFoodMenu=async(req,res)=>{
    }
 }
 
+export const deleteSingleMenu=async(req,res)=>{
+   try {
+      
+   } catch (error) {
+      res.status(500).json({
+         status:"Failed",
+         message:"Server error",
+         error:error.message
+      })
+   }
+}
