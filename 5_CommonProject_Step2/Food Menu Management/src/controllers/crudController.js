@@ -126,10 +126,35 @@ export const deleteSingleMenu=async(req,res)=>{
          message:"User deleted",
          deleted_data:deleteMenu
       });
-      
+
    } catch (error) {
       res.status(500).json({
          status:"Failed",
+         message:"Server error",
+         error:error.message
+      })
+   }
+}
+
+export const deleteAllMenu=async(req,res)=>{
+   try {
+      const deleteAllMenu=await FoodMenu.deleteMany();
+      if(!deleteAllMenu){
+         return res.status(404).json({
+            status:"Not found",
+            message:"Empty database"
+         })
+      }
+
+      res.status(200).json({
+         status:"Success",
+         message:"All data deleted",
+         deleted_data:deleteAllMenu
+      })
+
+   } catch (error) {
+      res.status(500).json({
+         status:"Error",
          message:"Server error",
          error:error.message
       })
