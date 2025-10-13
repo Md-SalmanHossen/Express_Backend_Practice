@@ -7,6 +7,7 @@ router.get('/',crudController.readAllFoodMenu);
 router.get('/:id',crudController.readSingleFoodMenu);
 router.put('/:id',crudController.updateFoodMenu);
 router.delete('/:id',crudController.deleteSingleMenu);
+router.delete('/',crudController.deleteAllMenu);
 
 
 export default router;
