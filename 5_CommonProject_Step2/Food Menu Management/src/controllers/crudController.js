@@ -149,6 +149,7 @@ export const deleteAllMenu=async(req,res)=>{
       res.status(200).json({
          status:"Success",
          message:"All data deleted",
+         delete_count:deleteAllMenu.length,
          deleted_data:deleteAllMenu
       })
 
