@@ -6,7 +6,7 @@ router.post('/',crudController.createFoodMenu);
 router.get('/',crudController.readAllFoodMenu);
 router.get('/:id',crudController.readSingleFoodMenu);
 router.put('/:id',crudController.updateFoodMenu);
-
+router.delete('/:id',crudController.deleteSingleMenu);
 
 
 export default router;
