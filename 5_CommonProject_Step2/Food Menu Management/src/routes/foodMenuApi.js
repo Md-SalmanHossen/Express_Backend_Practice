@@ -1,6 +1,10 @@
 import *as crudController from '../controllers/crudController.js'
+import *as featureController from '../controllers/featureController.js'
 import express from 'express';
 const router=express.Router();
+
+
+router.get('/action/search',)
 
 router.post('/',crudController.createFoodMenu);
 router.get('/',crudController.readAllFoodMenu);
