@@ -23,6 +23,7 @@ export const readAllFoodMenu=async(req,res)=>{
       res.status(201).json({
          success:true,
          message:true,
+         count_all_menu:allFod.length,
          data:allFod
       })
    } catch (error) {
