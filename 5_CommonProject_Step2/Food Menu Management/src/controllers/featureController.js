@@ -10,7 +10,21 @@ export const searchController=async(req,res)=>{
          })
       }
 
-      
+      const searchRegex=new RegExp(searchQuery,'i');
+
+      const results=await FoodMenu.find({
+         $or:[
+            {name:{$regex:searchRegex}},
+            {description:{$regex:searchRegex}}
+         ]
+      });
+
+      res.status(200).json({
+         status:"Success",
+         results_count:results.length,
+         data:results
+      })
+
    } catch (error) {
       res.status(500).json({
          status:"error",
