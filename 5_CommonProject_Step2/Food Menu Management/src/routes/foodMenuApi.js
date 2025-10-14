@@ -4,7 +4,7 @@ import express from 'express';
 const router=express.Router();
 
 
-router.get('/action/search',)
+router.get('/action/search',featureController.searchController);
 
 router.post('/',crudController.createFoodMenu);
 router.get('/',crudController.readAllFoodMenu);
