@@ -39,18 +39,13 @@ export const sortController=async(req,res)=>{
 
       const {sort}=req.query;
       const sortObject={name:1}
-      sortObject[fieldToSort];
-
-      let mongoOrder;
-      if(order && order.toLowercase()==='desc')mongoOrder=-1;
-      else mongoOrder=1;
 
       if(sort){
          const [field,order]=sort.split('_');
          const allowFields=['price','name','category'];
          
          let mongoOrder;
-         if(order && order.toLowercase()==='desc')mongoOrder=-1;
+         if(order && order.toLowerCase()==='desc')mongoOrder=-1;
          else mongoOrder=1;
 
          if(allowFields.includes(field)){
