@@ -5,6 +5,7 @@ const router=express.Router();
 
 
 router.get('/action/search',featureController.searchController);
+router.get('/action/sort',featureController.sortController);
 
 router.post('/',crudController.createFoodMenu);
 router.get('/',crudController.readAllFoodMenu);
