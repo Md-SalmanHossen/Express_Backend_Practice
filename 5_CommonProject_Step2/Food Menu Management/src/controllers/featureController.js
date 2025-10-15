@@ -38,26 +38,25 @@ export const sortController=async(req,res)=>{
    try {
 
       const {sort}=req.query;
-      const sortObject={name:1}
+      let sortObject={price:1};
 
       if(sort){
-         const [field,order]=sort.split('_');
+         let [field,order]=sort.split('_');
          const allowFields=['price','name','category'];
          
-         let mongoOrder;
-         if(order && order.toLowerCase()==='desc')mongoOrder=-1;
-         else mongoOrder=1;
+         let sortOrder;
+         if(order && order.toLowerCase()==='desc')sortOrder=-1;
+         else sortOrder=1;
 
          if(allowFields.includes(field)){
             sortObject={};
-            sortObject[field]=mongoOrder;
-         }else console.warn(`Invalid sort field provided: ${field}.Using Default sort`)
+            sortObject[field]=sortOrder;
+         }else console.warn(`Invalid sort field: ${field}.Using By default sort by price`)
 
          const result=await FoodMenu.find().sort(sortObject);
 
          res.status(200).json({
             status:"Success",
-            sort_criteria:sortObject,
             result_count:result.length,
             data:result
          })
