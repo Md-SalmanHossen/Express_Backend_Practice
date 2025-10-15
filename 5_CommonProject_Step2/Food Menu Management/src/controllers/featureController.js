@@ -5,7 +5,7 @@ export const searchController=async(req,res)=>{
       const {searchQuery}=req.query;
       if(!searchQuery){
          return res.status(400).json({
-            status:"Not Found",
+            status:"Failed",
             message:"Please provide a 'searchQuery' in the URL parameter (e.g.,?searchQuery==burger)"
          })
       }
@@ -22,6 +22,7 @@ export const searchController=async(req,res)=>{
       res.status(200).json({
          status:"Success",
          results_count:results.length,
+         search_keyword:searchQuery,
          data:results
       })
 
