@@ -33,3 +33,7 @@ export const searchController=async(req,res)=>{
       })
    }
 }
+
+export const sortController=async(req,res)=>{
+   
+}
