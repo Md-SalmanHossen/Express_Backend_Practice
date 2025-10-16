@@ -96,6 +96,10 @@ export const filterController=async(req,res)=>{
          data:result
       })
    } catch (error) {
-      
+      res.status(500).json({
+         status:"Error",
+         message:"Server error",
+         error:error.message
+      })
    }
 }
