@@ -83,9 +83,13 @@ export const filterController=async(req,res)=>{
 
       if(minPrice || maxPrice){
          filterObject.price={};
-         if(minPrice) filterObject.price.$gte=Number(minPrice)
-         if(maxPrice) filterObject.price.$lte=Number(maxPrice)
+         if(minPrice) filterObject.price.$gte=Number(minPrice);
+         if(maxPrice) filterObject.price.$lte=Number(maxPrice);
       }
+
+      const result=await FoodMenu.find(filterObject);
+
+      
    } catch (error) {
       
    }
