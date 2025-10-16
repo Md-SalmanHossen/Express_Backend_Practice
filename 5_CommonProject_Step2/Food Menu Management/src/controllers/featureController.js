@@ -80,7 +80,12 @@ export const filterController=async(req,res)=>{
       let filterObject={};
 
       if(category) filterObject.category=category;
-      
+
+      if(minPrice || maxPrice){
+         filterObject.price={};
+         if(minPrice) filterObject.price.$gte=Number(minPrice)
+         if(maxPrice) filterObject.price.$lte=Number(maxPrice)
+      }
    } catch (error) {
       
    }
