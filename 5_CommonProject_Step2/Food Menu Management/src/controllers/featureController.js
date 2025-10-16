@@ -89,7 +89,12 @@ export const filterController=async(req,res)=>{
 
       const result=await FoodMenu.find(filterObject);
 
-      
+      res.status(200).json({
+         status:"Success",
+         total_results:result.length,
+         applied_filters:filterObject,
+         data:result
+      })
    } catch (error) {
       
    }
