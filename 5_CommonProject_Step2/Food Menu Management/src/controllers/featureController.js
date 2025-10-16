@@ -76,6 +76,10 @@ export const sortController=async(req,res)=>{
 
 export const filterController=async(req,res)=>{
    try {
+      const {category,minPrice,maxPrice}=req.query;
+      let filterObject={};
+
+      if(category) filterObject.category=category;
       
    } catch (error) {
       
