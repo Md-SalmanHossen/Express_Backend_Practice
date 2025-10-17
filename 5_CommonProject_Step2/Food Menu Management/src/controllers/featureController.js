@@ -115,6 +115,12 @@ export const recommendationFood=async(req,res)=>{
          _id:-1
       }).limit(limit).select("name price category rating");
 
+      res.status(200).json({
+         status:"Success",
+         message:`Top ${limit} recommendation food items (sorted by rating)`,
+         result_count:recommendation.length,
+         data:recommendation
+      })
       
    } catch (error) {
       res.status(500).json({
