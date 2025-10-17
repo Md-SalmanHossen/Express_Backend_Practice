@@ -108,6 +108,13 @@ export const recommendationFood=async(req,res)=>{
    try {
 
       const limit=parseInt(req.query.limit) || 5;
+
+      const recommendation=await FoodMenu.find()
+      recommendation.sort({
+         rating:-1,
+         _id:-1
+      }).limit(limit).select("name price category rating");
+
       
    } catch (error) {
       res.status(500).json({
