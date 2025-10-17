@@ -103,3 +103,11 @@ export const filterController=async(req,res)=>{
       })
    }
 }
+
+export const recommendationFood=async(req,res)=>{
+   try {
+      
+   } catch (error) {
+      
+   }
+}
