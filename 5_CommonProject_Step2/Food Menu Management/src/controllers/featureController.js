@@ -106,6 +106,8 @@ export const filterController=async(req,res)=>{
 
 export const recommendationFood=async(req,res)=>{
    try {
+
+      const limit=parseInt(req.query.limit) || 5;
       
    } catch (error) {
       res.status(500).json({
