@@ -6,6 +6,10 @@ const routeNotFound=(req,res,next)=>{
          message:"Server not found"
       })
    } catch (error) {
-      
+      res.status(500).json({
+         status:"Error",
+         message:"Server error",
+         error:error.message,
+      })
    }
 }
