@@ -9,6 +9,7 @@ import routeNotFound from './src/middlewares/routeNotFound.js';
 const app=express();
 
 app.use(hpp());
+app.use(helmet());
 
 
 app.use(express.json());
