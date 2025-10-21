@@ -10,6 +10,11 @@ const app=express();
 
 app.use(hpp());
 app.use(helmet());
+const rateLimiter=rateLimit({
+   windowMs:15*60*1000,
+   max:1000,
+})
+
 
 
 app.use(express.json());
