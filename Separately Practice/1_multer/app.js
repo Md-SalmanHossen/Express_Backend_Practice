@@ -10,11 +10,12 @@ const app=express();
 
 app.use(hpp());
 app.use(helmet());
+app.use(cookieParser());
 const rateLimiter=rateLimit({
    windowMs:15*60*1000,
    max:1000,
 })
-
+app.use(rateLimiter);
 
 
 app.use(express.json());
