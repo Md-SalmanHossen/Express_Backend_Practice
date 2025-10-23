@@ -5,7 +5,7 @@ const app=express();
 
 
 app.use(hpp());
-//app.use(helmet());
+app.use(helmet());
 
 
 export default app;
