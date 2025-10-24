@@ -9,7 +9,7 @@ const app=express();
 
 app.use(hpp());
 app.use(helmet());
-//app.use(cookieParser());
+app.use(cookieParser());
 
 
 export default app;
