@@ -3,7 +3,7 @@ import hpp from 'hpp';
 import cookieParser from 'cookie-parser';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
-
+import cors from 'cors';
 
 const app=express();
 
