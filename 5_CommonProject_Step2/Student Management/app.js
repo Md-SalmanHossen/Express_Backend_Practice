@@ -7,7 +7,7 @@ import cors from 'cors';
 
 const app=express();
 
-
+app.use(cors());
 app.use(hpp());
 app.use(helmet());
 app.use(cookieParser());
