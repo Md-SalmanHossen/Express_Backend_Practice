@@ -17,7 +17,7 @@ const limiter=rateLimit({
 });
 app.use(limiter);
 
-app.use(express.json({extended:true}));
+app.use(express.json());
 
 
 export default app;
