@@ -22,4 +22,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}))
 
 
+app.use('student/api/',router);
+
+
 export default app;
