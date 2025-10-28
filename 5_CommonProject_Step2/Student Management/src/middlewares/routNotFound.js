@@ -6,6 +6,10 @@ const routeNotFound=(req,res)=>{
          message:"Route not Found in server"
       })
    } catch (error) {
-      
+      res.status(500).json({
+         status:"Internal error",
+         message:"Server internal error occur",
+         error:error.message,
+      })
    }
 }
