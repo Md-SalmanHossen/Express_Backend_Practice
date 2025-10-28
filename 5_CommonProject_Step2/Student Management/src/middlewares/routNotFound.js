@@ -13,3 +13,4 @@ const routeNotFound=(req,res)=>{
       })
    }
 }
+export default routeNotFound;
