@@ -5,7 +5,7 @@ import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import cors from 'cors';
 import router from './src/routes/studentManagementApi.js';
-
+import routeNotFound from './src/middlewares/routNotFound.js'
 const app=express();
 
 app.use(cors());
