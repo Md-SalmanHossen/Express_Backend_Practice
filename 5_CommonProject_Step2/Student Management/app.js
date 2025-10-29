@@ -23,6 +23,6 @@ app.use(express.urlencoded({extended:true}))
 
 
 app.use('student/api/',router);
-
+app.use(routeNotFound);
 
 export default app;
