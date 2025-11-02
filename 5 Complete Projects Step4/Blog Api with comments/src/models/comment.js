@@ -10,6 +10,6 @@ const commentSchema=mongoose.Schema({
       type:mongoose.Schema.Types.ObjectId,
       ref:'user'
    }
-})
+});
 
 export default mongoose.model('comment',commentSchema);
