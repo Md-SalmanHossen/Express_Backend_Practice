@@ -1,7 +1,7 @@
-import express from 'express';
-const app=express();
+import app from './app.js';
 
+const PORT=process.env.PORT ||2000;
 
-app.listen(5000,()=>{
-   console.log('server running on port 5000')
+app.listen(PORT,()=>{
+   console.log(`server running on port ${PORT}`)
 })

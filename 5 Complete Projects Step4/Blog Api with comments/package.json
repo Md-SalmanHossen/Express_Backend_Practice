@@ -26,6 +26,7 @@
     "daemon": "^1.1.0",
     "debug": "^4.4.3",
     "depd": "^2.0.0",
+    "dotenv": "^17.2.3",
     "dunder-proto": "^1.0.1",
     "ecdsa-sig-formatter": "^1.0.11",
     "ee-first": "^1.1.1",
@@ -129,10 +130,10 @@
     "wrappy": "^1.0.2"
   },
   "scripts": {
-    "dev":"nodemon index.js"
+    "dev": "nodemon index.js"
   },
   "keywords": [],
-  "type":"module",
+  "type": "module",
   "author": "",
   "license": "ISC",
   "description": ""
