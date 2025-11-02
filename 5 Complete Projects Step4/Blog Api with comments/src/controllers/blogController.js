@@ -23,8 +23,12 @@ export const createBlog=async(req,res)=>{
 
 export const getBlog=async(req,res)=>{
    try {
-      
+      const blogs=await blog.find().populate('author','name email');
+      res.status(200).json(blogs);
    } catch (error) {
-      
+      res.status(500).json({
+         message:"Internal error",
+         error:error.message
+      })
    }
 }
