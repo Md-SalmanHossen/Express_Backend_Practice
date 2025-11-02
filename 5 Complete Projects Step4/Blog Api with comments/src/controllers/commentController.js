@@ -1,0 +1,23 @@
+import comment from "../models/comment.js";
+
+export const addComment=async(req ,res)=>{
+   try {
+      const {comment}=req.body;
+
+      const addComment=await comment.create({
+         commentText,
+         blog:blogId,
+         user:req.user
+      })
+
+      res.status(200).json({
+         message:"Comment add successfully",
+         addComment
+      })
+   } catch (error) {
+      res.status(200).json({
+         message:"Server error",
+         error:error.message
+      })
+   }
+}
