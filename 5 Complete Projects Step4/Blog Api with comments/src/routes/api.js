@@ -10,10 +10,10 @@ const router=express.Router();
 router.post('/register',register);
 router.post('/login',login );
 
-router.post('/',authMiddleware,createBlog);
-router.get('/',getBlog);
+router.post('/blogs',authMiddleware,createBlog);
+router.get('/blogs',getBlog);
 
-router.post('/',authMiddleware,addComment);
-router.get('/:blogId',getBlogWithComments);
+router.post('/comments',authMiddleware,addComment);
+router.get('/comments/:blogId',getBlogWithComments);
 
 export default router;
