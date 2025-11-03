@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const commentSchema=mongoose.Schema({
    commentText:{
-      String,
+      type:String,
       required:true
    },
    blog:{
@@ -13,6 +13,6 @@ const commentSchema=mongoose.Schema({
       type:mongoose.Schema.Types.ObjectId,
       ref:'user'
    }
-},{Timestamps:true});
+},{timestamps:true});
 
 export default mongoose.model('comment',commentSchema);

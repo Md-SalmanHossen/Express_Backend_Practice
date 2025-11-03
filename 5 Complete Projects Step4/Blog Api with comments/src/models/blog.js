@@ -2,17 +2,17 @@ import mongoose from 'mongoose';
 
 const blogSchema=new mongoose.Schema({
    title:{
-      String,
+      type:String,
       required:true
    },
    content:{
-      String,
+      type:String,
       required:true
    },
    author:{
       type:mongoose.Schema.Types.ObjectId,
       ref:'user'
    },
-},{Timestamps:true});
+},{timestamps:true});
 
 export default mongoose.model('blog',blogSchema);
