@@ -1,4 +1,3 @@
-import { Timestamp } from 'bson';
 import mongoose from 'mongoose';
 
 const commentSchema=mongoose.Schema({
@@ -14,6 +13,6 @@ const commentSchema=mongoose.Schema({
       type:mongoose.Schema.Types.ObjectId,
       ref:'user'
    }
-},{Timestamp:true});
+},{Timestamps:true});
 
 export default mongoose.model('comment',commentSchema);
