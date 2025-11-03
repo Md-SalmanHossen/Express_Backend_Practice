@@ -26,6 +26,7 @@ export const addComment=async(req ,res)=>{
 
 export const getBlogWithComments=async(req , res)=>{
    try {
+      
       const {blogId}=req.params;
       const comments=await comment.find(
          {blog:blogId}.populate('user','name')
@@ -35,6 +36,7 @@ export const getBlogWithComments=async(req , res)=>{
          message:"comments successfully",
          comments
       })
+
    } catch (error) {
       res.status(500).json({
          message:"Server error",
