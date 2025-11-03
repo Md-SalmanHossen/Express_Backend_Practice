@@ -15,3 +15,5 @@ router.get('/',getBlog);
 
 router.post('/',authMiddleware,addComment);
 router.get('/:blogId',getBlogWithComments);
+
+export default router;
