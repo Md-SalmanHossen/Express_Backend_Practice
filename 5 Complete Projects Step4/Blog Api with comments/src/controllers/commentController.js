@@ -28,9 +28,7 @@ export const getBlogWithComments=async(req , res)=>{
    try {
       
       const {blogId}=req.params;
-      const comments=await comment.find(
-         {blog:blogId}.populate('user','name')
-      );
+      const comments=await comment.find({blog:blogId}).populate('user','name');
 
       res.status(200).json({
          message:"comments successfully",
