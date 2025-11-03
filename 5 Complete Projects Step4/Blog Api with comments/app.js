@@ -15,6 +15,6 @@ app.use(express.json());
 connectDB();
 
 app.use('/api/users/',api);
-app.use(routeNotFound());
+app.use(routeNotFound);
 
 export default app;

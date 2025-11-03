@@ -1,8 +1,8 @@
-import { message } from "statuses"
 
 const routeNotFound=(req ,res , next)=>{
    try {
       res.status(404).json({
+         status:"failed",
          message:"Route not found"
       })
    } catch (error) {
