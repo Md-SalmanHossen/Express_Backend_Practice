@@ -38,14 +38,14 @@ export const login=async(req,res)=>{
          message:"User not found"
       })
       
-      const match=await bcrypt.compare(password,user.password);
+      const match=await bcrypt.compare(password,findUser.password);
       if(!match) return res.status(401).json({
          message:"Wrong password or email",
       });
 
       const token=jwt.sign(
          { 
-            userId:user._id
+            userId:findUser._id
          },
          process.env.JWT_SECRET,
          {expiresIn:'1d'}
