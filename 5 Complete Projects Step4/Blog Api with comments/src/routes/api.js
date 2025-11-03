@@ -8,7 +8,7 @@ const router=express.Router();
  
    
 router.post('/register',register);
-router.post('/register',login );
+router.post('/login',login );
 
 router.post('/',authMiddleware,createBlog);
 router.get('/',getBlog);
