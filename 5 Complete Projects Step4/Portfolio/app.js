@@ -8,6 +8,6 @@ const app=express();
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
-connectDB();
+connectDB(); 
 
 export default app;
