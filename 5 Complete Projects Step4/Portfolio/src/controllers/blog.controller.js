@@ -51,10 +51,10 @@ export const getAllBlog=async(req,res)=>{
          success:true,
          message:"Fetched data all successfully",
          error:error.message,
-         total_blog:getAll.length,
+         total_blogs:getAll.length,
          data:getAll
       });
-      
+
    }catch(error){
       res.status(500).json({
          success:false,
