@@ -4,6 +4,7 @@ import cors from 'cors';
 import cookieParser from "cookie-parser";
 
 import connectDB from "./src/config/dbConnect.js";
+import routeNotFound from "./src/middlewares/routeNotFound.js";
 
 
 const app=express();
@@ -16,5 +17,7 @@ app.use(express.json);
 app.use(express.urlencoded({extended:true}));
 
 connectDB();
+
+app.use(routeNotFound);
 
 export default app;
