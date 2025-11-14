@@ -1,7 +1,7 @@
 import User from "../models/user.model.js";
 import  bcrypt from 'bcryptjs';
 
-const signup=async(req,res)=>{   
+export const signup=async(req,res)=>{   
    try {
       const {name,email,password,profile_img}=req.body;
 
@@ -45,10 +45,13 @@ const signup=async(req,res)=>{
 }
 
 
-const login=async(req,res)=>{   
+export const login=async(req,res)=>{   
    try {
       
    } catch (error) {
-      
+      res.status(500).json({
+         message:'Server internal error occur during login',
+         error:error.message
+      })
    }
 }
