@@ -7,16 +7,16 @@ export const signup=async(req,res)=>{
 
       if(!name||!email||!password){
          return res.status(400).json({
-            status:'Not found',
+            status:'Failed',
             message:'Please provide name,email and password'
          })
       }
 
-      const user=await User.find({email}).select('_id');
+      const user=await User.findOne({email}).select('_id');
 
       if(user){
          return res.status(409).json({
-            status:failed,
+            status:'Failed',
             message:'User already exists'
          })
       }

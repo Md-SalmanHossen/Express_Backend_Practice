@@ -17,7 +17,9 @@ const userSchema=new mongoose.Schema({
    profile_img:{
       type:String,
       default:null
-   }
+   },
+},{
+   versionKey:false
 });
 
 const User=mongoose.model('user',userSchema);
