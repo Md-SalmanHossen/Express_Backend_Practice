@@ -123,6 +123,21 @@ export const getProfile = async (req, res) => {
 export const updateProfile=async(req ,res )=>{
    try {
       
+      const id=req.user._id;
+      const {name,email,profile_img}=req.body;
+
+      const updateUser=await User.findByIdAndUpdate(
+         id,
+         {name,email,profile_img},
+         {new:true,runValidators:true}
+      );
+
+      res.status(200).json({
+         status:"Success",
+         message:'Profile updated successfully',
+         user:updateUser
+      });
+
    } catch (error) {
       res.status(500).json({
          message:'Server internal error occur during update profile'
