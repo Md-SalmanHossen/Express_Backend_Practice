@@ -5,21 +5,18 @@ const auth_middleware=async(req ,res , next)=>{
    try {
       let token;
 
-      if(req.cookies.jwt){
-         token=req.cookies.jwt;
-      }
-
       if(!token){
-         return req.status(401).json({
+         return res.status(401).json({
             message:'Not authorized,no token provided'
          })
       }
 
-      const decode=jwt.verify(token,process.env.JWT_SECRET);
-      req.user=await User.findById(decode.id).select('-password');
+      const decoded=jwt.verify(token,process.env.JWT_SECRET);
+      const userId=decoded.userId || decoded.id;
+      const user=await User.findById(userId).select('-password');
       
-      if(!req.user){
-         res.status(404).json({
+      if(!user){
+         return res.status(404).json({
             message:'User not found'
          })
       }

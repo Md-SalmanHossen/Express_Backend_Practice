@@ -1,7 +1,6 @@
 import User from "../models/user.model.js";
 import  bcrypt from 'bcryptjs';
 import generate_token from "../utils/jwt.utils.js";
-import auth_middleware from "../middlewares/auth.middleware.js";
 
 export const signup=async(req,res)=>{   
    try {
@@ -45,7 +44,6 @@ export const signup=async(req,res)=>{
       })
    }
 }
-
 
 export const login=async(req,res)=>{   
    try {
@@ -96,3 +94,28 @@ export const login=async(req,res)=>{
       })
    }
 }
+
+export const getProfile = async (req, res) => {
+  try {
+    const user = req.user;
+
+    if (!user) {
+      return res.status(404).json({
+        status: "Failed",
+        message: "User not found",
+      });
+    }
+
+    res.status(200).json({
+      status: "Success",
+      message: "User profile fetched successfully",
+      user,
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      message: "Server error fetching profile",
+      error: error.message,
+    });
+  }
+};
