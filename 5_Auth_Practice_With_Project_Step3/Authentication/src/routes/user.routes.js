@@ -9,6 +9,8 @@ router.post('/signup',user.signup);
 router.post('/login',user.login);
 
 router.get('/profile',auth_middleware,user.getProfile);
+router.put('/profile/update',auth_middleware,user.updateProfile);
+router.get('/profile/logout',auth_middleware,user.logout);
 
 
 
