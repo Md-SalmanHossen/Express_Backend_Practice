@@ -124,6 +124,18 @@ export const updateProfile=async(req ,res )=>{
    try {
       
    } catch (error) {
+      res.status(500).json({
+         message:'Server internal error occur during update profile'
+      })
+   }
+}
+
+export const logout=async(req ,res )=>{
+   try {
       
+   } catch (error) {
+      res.status(500).json({
+         message:'Server internal error occur during update profile'
+      })
    }
 }
