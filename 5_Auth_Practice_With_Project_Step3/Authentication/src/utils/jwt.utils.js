@@ -9,7 +9,7 @@ const generate_token=(payload,res)=>{
          expiresIn:'7d'
       });
 
-      res.cookie('jwt',token ,{
+      res.cookie('token',token ,{
          httpOnly:false,//for testing it false
          sameSite:'strict',
          maxAge:7*24*60*60*1000

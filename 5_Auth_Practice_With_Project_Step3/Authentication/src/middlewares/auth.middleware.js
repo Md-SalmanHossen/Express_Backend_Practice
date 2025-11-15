@@ -3,7 +3,7 @@ import User from '../models/user.model.js';
 
 const auth_middleware=async(req ,res , next)=>{
    try {
-      let token=req.cookies.jwt;
+      let token=req.cookies.token;
 
       if(!token){
          return res.status(401).json({
