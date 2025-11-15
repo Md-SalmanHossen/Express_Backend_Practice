@@ -3,7 +3,7 @@ import User from '../models/user.model.js';
 
 const auth_middleware=async(req ,res , next)=>{
    try {
-      let token;
+      let token=req.cookies.jwt;
 
       if(!token){
          return res.status(401).json({
@@ -20,6 +20,7 @@ const auth_middleware=async(req ,res , next)=>{
             message:'User not found'
          })
       }
+      req.user=user;
       next();
       
    } catch (error) {
