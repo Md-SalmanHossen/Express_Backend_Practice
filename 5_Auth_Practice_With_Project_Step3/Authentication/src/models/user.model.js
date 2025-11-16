@@ -18,6 +18,8 @@ const userSchema=new mongoose.Schema({
       type:String,
       default:null
    },
+   reset_password_token:String,
+   reset_password_expire:Date
 },{
    versionKey:false
 });
