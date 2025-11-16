@@ -6,9 +6,8 @@ import cookieParser from "cookie-parser";
 import connectDB from "./src/config/dbConnect.js";
 import routeNotFound from "./src/middlewares/routeNotFound.js";
 
-
-const app=express();
 dotenv.config();
+const app=express();
 
 app.use(cors());
 app.use(cookieParser());
