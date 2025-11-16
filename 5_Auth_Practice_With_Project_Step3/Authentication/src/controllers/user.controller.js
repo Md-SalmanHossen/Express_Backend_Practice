@@ -1,6 +1,9 @@
-import User from "../models/user.model.js";
 import  bcrypt from 'bcryptjs';
+import crypto from 'crypto';
+
+import User from "../models/user.model.js";
 import generate_token from "../utils/jwt.utils.js";
+import transporter from '../utils/email.utils.js';
 
 export const signup=async(req,res)=>{   
    try {
@@ -163,3 +166,38 @@ export const logout=async(req ,res )=>{
       })
    }
 }
+
+export const forgotPassword=async(req ,res)=>{
+   try {
+      const {email}=req.body;
+
+   } catch (error) {
+      res.status(500).json({
+         message:'Server internal error occur during forgot password',
+         error:error.message
+      })
+   }
+}
+
+export const verifyResetToken=async(req ,res)=>{
+   try {
+      
+   } catch (error) {
+      res.status(500).json({
+         message:'Server internal error occur during forgot password',
+         error:error.message
+      })
+   }
+}
+
+export const resetPassword=async(req ,res)=>{
+   try {
+      
+   } catch (error) {
+      res.status(500).json({
+         message:'Server internal error occur during forgot password',
+         error:error.message
+      })
+   }
+}
+
