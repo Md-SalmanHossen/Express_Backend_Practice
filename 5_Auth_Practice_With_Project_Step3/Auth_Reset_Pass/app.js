@@ -5,7 +5,9 @@ import cors from "cors";
 import rateLimit from 'express-rate-limit';
 import hpp from "hpp";
 import helmet from 'helmet'
+
 import connectDB from "./src/configs/database.config.js";
+import routeHandler from "./src/middlewares/route_handler.middleware.js";
 
 const app=express();
 dotenv.config();
@@ -28,7 +30,7 @@ app.use(limiter);
 connectDB();
 
 app.use("/api",router);
-
+app.use(routeHandler);
 
 
 export default app;
