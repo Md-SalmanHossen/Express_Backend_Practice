@@ -11,6 +11,7 @@ export const createTask=async (req,res)=>{
      })
    }
 }
+
 export const readTask=async (req,res)=>{
     try{
         
@@ -23,6 +24,7 @@ export const readTask=async (req,res)=>{
       })
     }
 }
+
 export const updateTask=async (req,res)=>{
     try{
         
@@ -35,6 +37,7 @@ export const updateTask=async (req,res)=>{
       })
     }
 }
+
 export const deleteTask=async (req,res)=>{
     try{
         
