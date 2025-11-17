@@ -8,6 +8,7 @@ import helmet from 'helmet'
 
 import connectDB from "./src/configs/database.config.js";
 import routeHandler from "./src/middlewares/route_handler.middleware.js";
+import router from "./src/routes/api.js";
 
 const app=express();
 dotenv.config();
