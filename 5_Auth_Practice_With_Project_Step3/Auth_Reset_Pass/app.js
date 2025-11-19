@@ -21,7 +21,7 @@ app.use(hpp());
 
 app.use(cookieParser());
 
-app.use(express.json({limit:'20mb'}))
+app.use(express.json())
 app.use(express.urlencoded({extended:true}));
 
 let limiter=rateLimit({windowMs:15*60*1000,max:3000});

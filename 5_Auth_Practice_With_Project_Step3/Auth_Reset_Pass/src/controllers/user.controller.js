@@ -5,7 +5,7 @@ export const signup=async (req,res)=>{
       const {email,firstName,lastName,mobile,password}=req.body;
 
       const userExist=await UsersModel.findOne({email});
-      if(!userExist){
+      if(userExist){
          return res.status(400).json({
             status:'fail',
             message:'Email already exists'
@@ -25,11 +25,11 @@ export const signup=async (req,res)=>{
          message:'Signup successfully',
          data:result
       });
-      
+
    }catch (error) {
        res.json({
         status:"fail",
-        message:'Server error occur during create tasks',
+        message:'Server error occur during signup',
         error:error.message
      })
    }
