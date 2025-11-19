@@ -1,5 +1,7 @@
 import UsersModel from './../models/Users.Model.js';
-import  bcrypt, { genSalt }  from 'bcryptjs';
+import  bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+
 
 export const signup=async (req,res)=>{
    try{
@@ -60,11 +62,11 @@ export const login=async (req,res)=>{
        };
 
        const token=jwt.sign(
-         {id:user._id,username:username},
+         {id:user._id,email:user.email},
          process.env.JWT_SECRET,
          {expiresIn:"1h"}
        );
-       
+
       res.status(200).json({
          status:'Success',
          message:'Login successfully',
