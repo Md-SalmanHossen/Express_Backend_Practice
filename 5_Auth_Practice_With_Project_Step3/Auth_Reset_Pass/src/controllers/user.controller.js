@@ -2,7 +2,30 @@ import UsersModel from './../models/Users.Model.js';
 
 export const signup=async (req,res)=>{
    try{
-       
+      const {email,firstName,lastName,mobile,password}=req.body;
+
+      const userExist=await UsersModel.findOne({email});
+      if(!userExist){
+         return res.status(400).json({
+            status:'fail',
+            message:'Email already exists'
+         })
+      }
+
+      const result=await UsersModel.create({
+         email,
+         firstName,
+         lastName,
+         mobile,
+         password
+      });
+
+      res.status(201).json({
+         status:'Success',
+         message:'Signup successfully',
+         data:result
+      });
+      
    }catch (error) {
        res.json({
         status:"fail",
