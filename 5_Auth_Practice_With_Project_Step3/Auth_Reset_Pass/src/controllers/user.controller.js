@@ -1,5 +1,6 @@
 import UsersModel from './../models/Users.Model.js';
 import  bcrypt, { genSalt }  from 'bcryptjs';
+
 export const signup=async (req,res)=>{
    try{
       const {email,firstName,lastName,mobile,password}=req.body;
@@ -49,17 +50,26 @@ export const login=async (req,res)=>{
          })
        }
 
-       if(user.password!==password){
-         return res.json({
+      const isMatch =await bcrypt.compare(password,user.password);
+
+       if(!isMatch){
+         return res.status(400).json({
             status:'fail',
             message:'Wrong email or password'
          })
        };
 
+       const token=jwt.sign(
+         {id:user._id,username:username},
+         process.env.JWT_SECRET,
+         {expiresIn:"1h"}
+       );
+       
       res.status(200).json({
          status:'Success',
          message:'Login successfully',
-         user_data:user
+         user_data:user,
+         token
       });
 
    }catch (error) {
