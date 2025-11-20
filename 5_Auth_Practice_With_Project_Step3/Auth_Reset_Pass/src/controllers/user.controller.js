@@ -85,6 +85,12 @@ export const login=async (req,res)=>{
 
 export const profileDetails=async (req,res)=>{
    try{
+      if(!req.userId){
+         return res.status(401).json({
+            status:'fail',
+            message:'Unauthorized'
+         });
+      }
        const user= await UsersModel.findById(req.userId).select('-password');
        if(!user){
          return res.status(404).json({
@@ -92,12 +98,11 @@ export const profileDetails=async (req,res)=>{
             message:'User not found'
          })
        }
-
-       res.status(200).json({
-         status:'success',
-         email:'Profile fetched successfully',
+      res.status(200).json({  
+         status:'success',  
+         message:'Profile fetched successfully',  
          user_data:user
-       });
+      });
 
    }catch (error) {
        res.json({
@@ -110,7 +115,12 @@ export const profileDetails=async (req,res)=>{
 
 export const ProfileUpdate=async (req,res)=>{
    try{
-
+      if(!req.userId){
+         return res.status(401).json({
+            status:'fail',
+            message:'Unauthorized'
+         });
+      }
        const updateUser=await UsersModel.findByIdAndUpdate(
          req.userId,
          req.body,
@@ -149,6 +159,12 @@ export const logout=async (req,res)=>{
 
 export const profileDelete=async (req,res)=>{
    try{
+      if(!req.userId){
+         return res.status(401).json({
+            status:'fail',
+            message:'Unauthorized'
+         });
+      }
        const deleteProfile=await UsersModel.findByIdAndDelete(req.userId);
        res.status(200).json({
          status:'success',

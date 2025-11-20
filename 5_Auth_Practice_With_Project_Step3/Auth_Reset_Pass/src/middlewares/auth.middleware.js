@@ -1,33 +1,24 @@
-import jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken'
 
-const authMiddleware = (req, res, next) => {
-    try {
-        let token = req.headers['token'];
+const authMiddleware=(req ,res , next)=>{
+   try {
 
-        if (!token) {
-            return res.status(401).json({
-                success: false,
-                message: 'Authentication failed: No token provided.'
-            });
-        }
+      const token=req.headers.authorization?.split(' ')[1];
+      
+      if(!token){
+         return res.status(401).json({
+            message:'Token missing'
+         });
+      }
+      const decoded=jwt.verify(token,process.env.JWT_SECRET);
+      req.userId=decoded.id;
 
-        // Handle common "Bearer Token" format if present
-        if (token.startsWith('Bearer ')) {
-            token = token.slice(7, token.length);
-        }
-
-        const decodedPayload = jwt.verify(token, process.env.JWT_SECRET);
-        req.body.userId = decodedPayload.userId;
-
-        next();
-
-    } catch (error) {
-        res.status(401).json({
-            success: false,
-            message: "Unauthorized or internal error",
-            error: error.message
-        });
-    }
-};
-
+      next();
+   } catch (error) {
+      res.status(500).json({
+         message:'Invalid token',
+         error:error.message
+      })
+   }
+}
 export default authMiddleware;
