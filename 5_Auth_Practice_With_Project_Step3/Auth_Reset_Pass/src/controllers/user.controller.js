@@ -1,6 +1,8 @@
 import UsersModel from './../models/Users.Model.js';
 import  bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
+import OTPModel from '../models/OTP.Model.js';
+import sendEmail from '../utils/email.utils.js';
 
 
 export const signup=async (req,res)=>{
@@ -182,6 +184,40 @@ export const profileDelete=async (req,res)=>{
 
 export const verifyEmail=async (req,res)=>{
    try{
+       const {email}=req.body;
+       if(email){
+         return res.status(404).json({
+            status:'fail',
+            message:'Email is required'
+         })
+       }
+
+       const otp=Math.floor(100000+Math.random()*900000);
+
+       await OTPModel.create({
+         email,
+         otp,
+         status:'Pending',
+       });
+
+       const response=await sendEmail(
+         email,
+         "Your Otp Code",
+         `<h3>Your otp is: <b>${otp}</b></h3>`
+       );
+
+       if(!response.success){
+         return res.status(500).json({
+            status:'fail',
+            message:'Email not sent',
+            error:response.error
+         })
+       }
+
+       res.status(200).json({
+         status:'success',
+         message:'OTP sent successfully'
+       });
        
    }catch (error) {
        res.json({
