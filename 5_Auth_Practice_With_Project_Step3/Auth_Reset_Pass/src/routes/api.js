@@ -10,7 +10,7 @@ router.post('/login',user.login);
 router.get('/profile',auth, user.profileDetails);
 router.put('/profile',auth, user.ProfileUpdate);
 router.delete('/profile',auth, user.profileDelete);
-router.get('/profile',auth, user.logout);
+router.get('/logout',auth, user.logout);
 
 
 

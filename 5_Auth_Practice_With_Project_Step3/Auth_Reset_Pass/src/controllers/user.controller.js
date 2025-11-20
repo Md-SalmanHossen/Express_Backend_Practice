@@ -192,6 +192,18 @@ export const verifyEmail=async (req,res)=>{
    }
 }
 
+export const changePassword=async (req,res)=>{
+   try{
+       
+   }catch (error) {
+       res.json({
+        status:"fail",
+        message:'Server error occur during change password',
+        error:error.message
+     })
+   }
+}
+
 export const verifyOTP=async (req,res)=>{
    try{
        
