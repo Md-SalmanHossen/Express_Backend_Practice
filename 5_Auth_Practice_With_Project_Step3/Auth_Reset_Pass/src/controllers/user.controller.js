@@ -85,11 +85,24 @@ export const login=async (req,res)=>{
 
 export const profileDetails=async (req,res)=>{
    try{
-       
+       const user= await UsersModel.findById(req.userId).select('-password');
+       if(!user){
+         return res.status(404).json({
+            status:'fail',
+            message:'User not found'
+         })
+       }
+
+       res.status(200).json({
+         status:'success',
+         email:'Profile fetched successfully',
+         user_data:user
+       });
+
    }catch (error) {
        res.json({
         status:"fail",
-        message:'Server error occur during create tasks',
+        message:'Server error occur during fetch the profile',
         error:error.message
      })
    }
