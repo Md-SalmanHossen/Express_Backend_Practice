@@ -9,6 +9,7 @@ router.post('/login',user.login);
 
 router.post('/verify-email',user.sendOTP);
 router.post('/verify-otp',user.verifyOTP);
+router.post('/reset-password',user.resetPassword);
 
 router.get('/profile',auth, user.profileDetails);
 router.put('/profile',auth, user.ProfileUpdate);
