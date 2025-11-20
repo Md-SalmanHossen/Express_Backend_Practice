@@ -149,11 +149,16 @@ export const logout=async (req,res)=>{
 
 export const profileDelete=async (req,res)=>{
    try{
-       
+       const deleteProfile=await UsersModel.findByIdAndDelete(req.userId);
+       res.status(200).json({
+         status:'success',
+         message:'Profile deleted successfully',
+         delete_data:deleteProfile
+       })
    }catch (error) {
        res.json({
         status:"fail",
-        message:'Server error occur during create tasks',
+        message:'Server error occur during delete profile',
         error:error.message
      })
    }
