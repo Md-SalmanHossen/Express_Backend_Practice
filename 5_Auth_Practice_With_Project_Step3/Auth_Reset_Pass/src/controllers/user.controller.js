@@ -110,11 +110,23 @@ export const profileDetails=async (req,res)=>{
 
 export const ProfileUpdate=async (req,res)=>{
    try{
-       
+      
+       const updateUser=await UsersModel.findByIdAndUpdate(
+         req.userId,
+         req.body,
+         {new: true}
+       ).select("-password");
+
+       res.status(200).json({
+         status:'success',
+         message:'Profile updated successfully',
+         user_data:updateUser
+       });
+
    }catch (error) {
        res.json({
         status:"fail",
-        message:'Server error occur during create tasks',
+        message:'Server error occur during profile update',
         error:error.message
      })
    }
