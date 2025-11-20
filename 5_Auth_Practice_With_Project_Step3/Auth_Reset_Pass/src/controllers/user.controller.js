@@ -263,6 +263,38 @@ export const verifyOTP=async (req,res)=>{
 
 export const resetPassword=async (req,res)=>{
    try{
+       const {email,otp,newPassword}=req.body;
+
+       const recordInfo=await OTPModel.findOne({
+         email,
+         otp,
+         status:"Verified",
+       });
+
+       if(!recordInfo){
+         return res.status(400).json({
+            status:'fail',
+            message:'OTP not verified'
+         })
+       }
+
+       const salt=await bcrypt.genSalt(10);
+       const hashedPass=await bcrypt.hash(newPassword,salt);
+
+       await UsersModel.updateOne(
+         {email},
+         {password:hashedPass}
+       );
+
+       await OTPModel.updateOne(
+         {email,otp},
+         {status:'Used'}
+       );
+
+       res.status(200).json({
+         status:'success',
+         message:'Password reset successfully'
+       });
        
    }catch (error) {
        res.json({
