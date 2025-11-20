@@ -110,7 +110,7 @@ export const profileDetails=async (req,res)=>{
 
 export const ProfileUpdate=async (req,res)=>{
    try{
-      
+
        const updateUser=await UsersModel.findByIdAndUpdate(
          req.userId,
          req.body,
@@ -134,11 +134,14 @@ export const ProfileUpdate=async (req,res)=>{
 
 export const logout=async (req,res)=>{
    try{
-       
+       res.status(200).json({
+         status:'success',
+         message:'Logout successfully'
+       })
    }catch (error) {
        res.json({
         status:"fail",
-        message:'Server error occur during create tasks',
+        message:'Server error occur during logout',
         error:error.message
      })
    }
