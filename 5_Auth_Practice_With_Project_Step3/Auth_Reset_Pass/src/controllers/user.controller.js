@@ -182,10 +182,10 @@ export const profileDelete=async (req,res)=>{
    }
 }
 
-export const verifyEmail=async (req,res)=>{
+export const sendOTP=async (req,res)=>{
    try{
        const {email}=req.body;
-       if(email){
+       if(!email){
          return res.status(404).json({
             status:'fail',
             message:'Email is required'
@@ -218,7 +218,7 @@ export const verifyEmail=async (req,res)=>{
          status:'success',
          message:'OTP sent successfully'
        });
-       
+
    }catch (error) {
        res.json({
         status:"fail",
