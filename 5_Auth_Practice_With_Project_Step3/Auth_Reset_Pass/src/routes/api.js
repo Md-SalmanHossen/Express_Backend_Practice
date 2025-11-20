@@ -8,6 +8,7 @@ router.post('/signup',user.signup);
 router.post('/login',user.login);
 
 router.post('/verify-email',user.sendOTP);
+router.post('/verify-otp',user.verifyOTP);
 
 router.get('/profile',auth, user.profileDetails);
 router.put('/profile',auth, user.ProfileUpdate);

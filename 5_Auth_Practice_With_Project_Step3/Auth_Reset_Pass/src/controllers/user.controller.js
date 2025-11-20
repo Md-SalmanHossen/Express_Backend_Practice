@@ -222,19 +222,7 @@ export const sendOTP=async (req,res)=>{
    }catch (error) {
        res.json({
         status:"fail",
-        message:'Server error occur during create tasks',
-        error:error.message
-     })
-   }
-}
-
-export const changePassword=async (req,res)=>{
-   try{
-       
-   }catch (error) {
-       res.json({
-        status:"fail",
-        message:'Server error occur during change password',
+        message:'Server error occur during send otp',
         error:error.message
      })
    }
@@ -242,11 +230,32 @@ export const changePassword=async (req,res)=>{
 
 export const verifyOTP=async (req,res)=>{
    try{
-       
+       const {email,otp}=req.body;
+
+       const recordInfo=await OTPModel.findOne({email,otp,status:"Pending"});
+
+       if(!recordInfo){
+         return res.status(400).message({
+            status:'fail',
+            message:'Invalid OTP'
+         })
+       }
+
+       await OTPModel.updateOne(
+         {email,otp},
+         {status:'Verified'}
+       );
+
+       res.status(200).json({
+         status:'success',
+         message:'OTP verified successfully'
+       });
+
+
    }catch (error) {
        res.json({
         status:"fail",
-        message:'Server error occur during create tasks',
+        message:'Server error occur during verify otp',
         error:error.message
      })
    }
