@@ -6,7 +6,9 @@ import rateLimit from 'express-rate-limit';
 import hpp from "hpp";
 import helmet from 'helmet'
 
-
+import router from "./src/routes/api.route.js";
+import connectDB from "./src/config/database.config.js";
+import routeHandler from "./src/middlewares/route_handler.middleware.js";
 
 
 const app=express();
@@ -25,7 +27,10 @@ app.use(express.urlencoded({extended:true}));
 let limiter=rateLimit({windowMs:15*60*1000,max:3000});
 app.use(limiter);
 
+connectDB();
 
+app.use('/portfolio/v1/api',router);
+app.use(routeHandler);
 
 
 export default app;
