@@ -5,4 +5,5 @@ const router=express.Router();
 
 router.post('/blogs',createBlog); 
 router.get('/blogs',getAllBlog);
+
 export default router;
