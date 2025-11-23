@@ -6,7 +6,7 @@ import rateLimit from 'express-rate-limit';
 import hpp from "hpp";
 import helmet from 'helmet'
 
-import router from "./src/routes/api.route.js";
+import router from "./src/routes/user.route.js";
 import connectDB from "./src/config/database.config.js";
 import routeHandler from "./src/middlewares/route_handler.middleware.js";
 
