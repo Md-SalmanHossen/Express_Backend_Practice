@@ -9,5 +9,6 @@ router.post('/signup',user.signup);
 router.post('/verify-email',user.verifyEmail);
 router.post('/login',user.login);
 
+router.get('/profile', auth, user.profile);
 
 export default router;

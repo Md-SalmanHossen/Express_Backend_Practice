@@ -155,20 +155,30 @@ export const login=async(req ,res)=>{
 export const profile=async(req ,res)=>{
    try {
 
-       const user=await User.findById(req.userId).select("-password");
-       if(!user){
+       const getUser=await User.findById(req.userId);
+       if(!getUser){
          return res.status(404).json({
             status:'fail',
             message:'User not found'
          });
        }
 
+       const user=getUser.toObject();
+       const filtered={
+         name:user.name,
+         email:user.email,
+         role:user.role,
+         bio:user.bio,
+         avatar_url:user.avatar_Url,
+         createdAt:user.createdAt
+       };
+
        res.status(200).json({
          status:'success',
          message:'User fetched successfully',
-         user
+         user:filtered
        });
-       
+
    } catch (error) {
       res.status(500).json({
          status:'fail',
