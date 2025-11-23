@@ -1,4 +1,4 @@
-import bcrypt from 'bcryptjs';
+import bcrypt, { genSalt } from 'bcryptjs';
 import  jwt  from 'jsonwebtoken';
 
 import User from '../models/User.model.js';
@@ -349,7 +349,7 @@ export const verifyOtpForReset=async(req ,res)=>{
       res.status(200).json({
          status:'success',
          message:'OTP verified successfully',
-         resetPasswordToken:resetPassword,
+         resetPasswordToken:resetPasswordToken,
       });
 
    } catch (error) {
@@ -361,10 +361,45 @@ export const verifyOtpForReset=async(req ,res)=>{
    }
 }
 
-
 export const resetPassword=async(req ,res)=>{
    try {
+
+      const {email,newPassword}=req.body;
+      if(!email||!newPassword){
+         return res.status(400).json({
+            status:'fail',
+            message:'All fields are require'
+         })
+      }
+
+      const user=await User.findOne({email});
+      if(!user){
+         return res.status(404).json({
+            status:'fail',
+            message:'User not found'
+         })
+      }
+
+      if(!user.otp || !user.otpExpire||user.otpExpire<Date.now()){
+         return res.status(400).json({
+            status:'fail',
+            message:'OTP not verified or expired'
+         })
+      }
+
+      const salt=await bcrypt.genSalt(10);
+      const hashedPassword=await bcrypt.hash(newPassword,salt);
+
+      user.password=hashedPassword;
+      user.otp=null;
+      user.otpExpire=null;
       
+      await user.save();
+
+      res.status(200).json({
+         status:'success',
+         message:'Password reset successfully'
+      });
    } catch (error) {
       res.status(500).json({
          status:'fail',
