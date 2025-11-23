@@ -10,5 +10,7 @@ router.post('/verify-email',user.verifyEmail);
 router.post('/login',user.login);
 
 router.get('/profile', auth, user.profile);
+router.put('/profile', auth, user.updateProfile);
+
 
 export default router;
