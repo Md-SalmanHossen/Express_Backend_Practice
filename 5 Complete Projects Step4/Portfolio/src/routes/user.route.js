@@ -12,5 +12,6 @@ router.post('/login',user.login);
 router.get('/profile', auth, user.profile);
 router.put('/profile', auth, user.updateProfile);
 
+router.post('/forgot-password',user.forgotPassword);
 
 export default router;

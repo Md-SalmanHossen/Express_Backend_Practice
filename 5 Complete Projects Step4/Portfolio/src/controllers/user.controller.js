@@ -232,7 +232,7 @@ export const updateProfile=async(req ,res)=>{
    } catch (error) {
       res.status(500).json({
          status:'fail',
-         message:'Server error during ',
+         message:'Server error during update profile',
          error:error.message
       })
    }
@@ -264,7 +264,23 @@ export const forgotPassword=async(req ,res)=>{
       }
 
       const otp=String(Math.floor(100000+Math.random()*600000));
-      const 
+      const otpExpire=Date.now()+5*60*1000;
+      
+      user.otp=otp;
+      user.otpExpire=otpExpire;
+      await user.save();
+      
+      await sendEmail(
+         email,
+         "Reset Password OTP",
+         `<h1>Your OTP is ${otp}</h1>`
+      );
+
+      res.status(200).json({
+         status:'success',
+         message:'OTP sent for reset password successfully'
+      });
+
    } catch (error) {
       res.status(500).json({
          status:'fail',
