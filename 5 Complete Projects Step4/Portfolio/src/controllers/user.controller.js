@@ -190,7 +190,45 @@ export const profile=async(req ,res)=>{
 
 export const updateProfile=async(req ,res)=>{
    try {
-      
+
+      const {name,bio,avatar_Url}=req.body;
+      if(!name && !bio &&avatar_Url){
+         return res.status(400).json({
+            status:'fail',
+            message:'Nothing to update'
+         })
+      }
+
+      const user=await User.findById(req.userId);
+      if(!user){
+         return res.status(404).json({
+            status:'fail',
+            message:'User not found',
+         })
+      }
+
+      if(name) user.name=name;
+      if(bio) user.bio=bio;
+      if(avatar_Url) user.avatar_Url=avatar_Url;
+
+      const updatedUser=await user.save();
+      const userObj=updatedUser.toObject();
+
+      const filteredInfo={
+         name:userObj.name,
+         email:userObj.email,
+         role:userObj.role,
+         bio:userObj.bio,
+         avatar_Url:userObj.avatar_Url,
+         createdAt:userObj.createdAt,
+         updatedAt:userObj.updatedAt
+      }
+
+      res.status(200).json({
+         status:'success',
+         message:'Profile update successfully',
+         user:filteredInfo
+      })
    } catch (error) {
       res.status(500).json({
          status:'fail',
@@ -212,7 +250,31 @@ export const logout=async(req ,res)=>{
    }
 }
 
-export const sendVerifyEmail=async(req ,res)=>{
+export const forgotPassword=async(req ,res)=>{
+   try {
+
+      const {email}=req.body;
+
+      const user=await User.findOne({email});
+      if(user){
+         return res.status(400).json({
+            status:'fail',
+            message:'User not found'
+         })
+      }
+
+      const otp=String(Math.floor(100000+Math.random()*600000));
+      const 
+   } catch (error) {
+      res.status(500).json({
+         status:'fail',
+         message:'Server error during ',
+         error:error.message
+      })
+   }
+}
+
+export const verifyOtpForReset=async(req ,res)=>{
    try {
       
    } catch (error) {
@@ -224,17 +286,6 @@ export const sendVerifyEmail=async(req ,res)=>{
    }
 }
 
-export const forgotPassword=async(req ,res)=>{
-   try {
-      
-   } catch (error) {
-      res.status(500).json({
-         status:'fail',
-         message:'Server error during ',
-         error:error.message
-      })
-   }
-}
 
 export const resetPassword=async(req ,res)=>{
    try {
@@ -259,3 +310,15 @@ export const changePassword=async(req ,res)=>{
       })
    }
 }
+export const profileDelete=async(req ,res)=>{
+   try {
+      
+   } catch (error) {
+      res.status(500).json({
+         status:'fail',
+         message:'Server error during ',
+         error:error.message
+      })
+   }
+}
+

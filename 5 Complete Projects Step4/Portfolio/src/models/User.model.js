@@ -37,7 +37,7 @@ const userSchema=new mongoose.Schema({
   },
   otp:{
     type:String,
-    default:'null'//hashed otp
+    default:'null'
   },
   otpExpire:{
     type:Date,
