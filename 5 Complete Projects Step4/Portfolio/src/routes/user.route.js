@@ -7,7 +7,7 @@ const router=express.Router();
 
 router.post('/signup',user.signup);
 router.post('/verify-email',user.verifyEmail);
-
 router.post('/login',user.login);
+
 
 export default router;

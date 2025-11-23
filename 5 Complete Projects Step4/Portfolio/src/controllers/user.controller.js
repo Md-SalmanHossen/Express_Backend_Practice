@@ -111,6 +111,7 @@ export const login=async(req ,res)=>{
       const {email,password}=req.body;
       if(!email || !password){
          return res.status(400).json({
+            status:'success',
             message:'All fields are require',
          })
       };
@@ -118,6 +119,7 @@ export const login=async(req ,res)=>{
       const user=await User.findOne({email});
       if(!user){
          return res.status(404).json({
+            status:'fail',
             message:'User not found'
          })
       };
@@ -125,6 +127,7 @@ export const login=async(req ,res)=>{
       const matchedPass=await bcrypt.compare(password,user.password);
       if(!matchedPass){
          return res.status(400).json({
+            status:'fail',
             message:"Wrong email or password"
          });
       }
@@ -136,6 +139,7 @@ export const login=async(req ,res)=>{
       );
 
       res.status(200).json({
+         status:'success',
          message:'Login successfully',
          token
       })
@@ -150,11 +154,25 @@ export const login=async(req ,res)=>{
 
 export const profile=async(req ,res)=>{
    try {
-      
+
+       const user=await User.findById(req.userId).select("-password");
+       if(!user){
+         return res.status(404).json({
+            status:'fail',
+            message:'User not found'
+         });
+       }
+
+       res.status(200).json({
+         status:'success',
+         message:'User fetched successfully',
+         user
+       });
+       
    } catch (error) {
       res.status(500).json({
          status:'fail',
-         message:'Server error during ',
+         message:'Server error during get profile',
          error:error.message
       })
    }
