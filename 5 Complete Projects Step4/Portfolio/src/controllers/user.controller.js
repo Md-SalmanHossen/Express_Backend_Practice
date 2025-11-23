@@ -26,7 +26,7 @@ export const signup=async(req ,res)=>{
       const salt= await bcrypt.genSalt(10);
       const hashedPassword=await bcrypt.hash(password,salt);
 
-      const otp=String(Math.floor(100000+Math.random()*500000));
+      const otp=Math.floor(100000+Math.random()*900000).toString();
       const otpExpire=Date.now()+5*60*1000;
 
       const user=await User.create({
@@ -254,26 +254,38 @@ export const forgotPassword=async(req ,res)=>{
    try {
 
       const {email}=req.body;
+      if(!email){
+         return res.status(400).json({
+            status:'fail',
+            message:'Email is required'
+         });
+      }
 
       const user=await User.findOne({email});
-      if(user){
+      if(!user){
          return res.status(400).json({
             status:'fail',
             message:'User not found'
          })
       }
 
-      const otp=String(Math.floor(100000+Math.random()*600000));
+      const otp=Math.floor(100000+Math.random()*900000).toString();
       const otpExpire=Date.now()+5*60*1000;
       
       user.otp=otp;
       user.otpExpire=otpExpire;
       await user.save();
-      
+
       await sendEmail(
          email,
          "Reset Password OTP",
-         `<h1>Your OTP is ${otp}</h1>`
+         `<div style="font-family:Arial;padding:20px">
+            <h2>Reset Password Verification</h2>
+            <p>Your OTP is: </p>
+            <h1 style="background:#eeee;padding:10px;">${otp}</h1>
+            <p>this OTP will expire in 5 minutes</p>
+         </div>
+         `
       );
 
       res.status(200).json({
