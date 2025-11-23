@@ -238,18 +238,6 @@ export const updateProfile=async(req ,res)=>{
    }
 }
 
-export const logout=async(req ,res)=>{
-   try {
-      
-   } catch (error) {
-      res.status(500).json({
-         status:'fail',
-         message:'Server error during ',
-         error:error.message
-      })
-   }
-}
-
 export const forgotPassword=async(req ,res)=>{
    try {
 
@@ -453,6 +441,23 @@ export const changePassword=async(req ,res)=>{
       res.status(500).json({
          status:'fail',
          message:'Server error during change password',
+         error:error.message
+      })
+   }
+}
+
+export const logout=async(req ,res)=>{
+   try {
+      
+      res.status(200).json({
+         message:'success',
+         message:'Logout success'
+      });
+
+   } catch (error) {
+      res.status(500).json({
+         status:'fail',
+         message:'Server error during ',
          error:error.message
       })
    }
