@@ -296,7 +296,7 @@ export const forgotPassword=async(req ,res)=>{
    } catch (error) {
       res.status(500).json({
          status:'fail',
-         message:'Server error during ',
+         message:'Server error during send otp',
          error:error.message
       })
    }
@@ -304,11 +304,58 @@ export const forgotPassword=async(req ,res)=>{
 
 export const verifyOtpForReset=async(req ,res)=>{
    try {
-      
+
+      const {email,otp}=req.body;
+      if(!email||!otp){
+         return res.status(400).json({
+            status:'fail',
+            message:'Email and OTP are required',
+         })
+      }
+
+      const user=await User.findOne({email});
+      if(!user){
+         return res.status(404).json({
+            status:'fail',
+            message:'User not found'
+         });
+      }
+
+      if(user.otp!==otp){
+         return res.status(400).json({
+            status:'fail',
+            message:'Invalid OTP'
+         })
+      }
+
+      if(user.otpExpire<Date.now()){
+         return res.status(400).json({
+            status:'fail',
+            message:'OTP expired.Please request a new OTP'
+         })
+      }
+
+      const token=Math.random().toString(36).substring(2,15);
+      const tokenExpire=Date.now()+10*60*1000;
+
+      user.resetPasswordToken=token;
+      user.resetPasswordExpired=tokenExpire;
+
+      user.otp=null;
+      user.otpExpire=null;
+
+      await user.save();
+
+      res.status(200).json({
+         status:'success',
+         message:'OTP verified successfully',
+         resetPasswordToken:resetPassword,
+      });
+
    } catch (error) {
       res.status(500).json({
          status:'fail',
-         message:'Server error during ',
+         message:'Server error during verify otp',
          error:error.message
       })
    }
