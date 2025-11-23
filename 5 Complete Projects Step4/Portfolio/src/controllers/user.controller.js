@@ -1,8 +1,8 @@
 import bcrypt from 'bcryptjs';
+import  jwt  from 'jsonwebtoken';
 
 import User from '../models/User.model.js';
 import sendEmail from './../utils/email.utils.js';
-import { jwt } from 'jsonwebtoken';
 
 
 
@@ -99,7 +99,7 @@ export const verifyEmail=async(req ,res)=>{
    } catch (error) {
       res.status(500).json({
          status:'fail',
-         message:'Server error during ',
+         message:'Server error during verify email',
          error:error.message
       })
    }
@@ -142,7 +142,7 @@ export const login=async(req ,res)=>{
    } catch (error) {
       res.status(500).json({
          status:'fail',
-         message:'Server error during ',
+         message:'Server error during login',
          error:error.message
       })
    }
