@@ -35,11 +35,11 @@ const userSchema=new mongoose.Schema({
     type:String,
     default:false
   },
-  emailOTP:{
+  otp:{
     type:String,
     default:'null'//hashed otp
   },
-  emailOTPExpire:{
+  otpExpire:{
     type:Date,
     default:null,
   },

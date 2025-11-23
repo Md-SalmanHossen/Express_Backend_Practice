@@ -58,7 +58,43 @@ export const signup=async(req ,res)=>{
 
 export const verifyEmail=async(req ,res)=>{
    try {
-      
+      const {email,otp}=req.body;
+      if(!email ||!otp){
+         return res.status(400).json({
+            message:'All filed are require'
+         })
+      }
+
+      const user=await User.findOne({email});
+      if(!user){
+         return res.status(404).json({
+            message:'User not found',
+         })
+      }
+
+      if(user.otp!==otp){
+         return res.status(400).json({
+            message:'Invalid OTP'
+         })
+      };
+
+      if(user.otpExpire<Date.now()){
+         return res.status(400).json({
+            message:'OTP expired'
+         })
+      };
+
+      user.isEmailVerified=true;
+      user.otp=null;
+      user.otpExpire=null;
+
+      await user.save();
+
+      res.status(200).json({
+         message:'Email verified successfully',
+      });
+
+
    } catch (error) {
       res.status(500).json({
          status:'fail',
