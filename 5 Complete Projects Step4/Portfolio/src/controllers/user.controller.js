@@ -358,11 +358,11 @@ export const verifyOtpForReset=async(req ,res)=>{
 export const resetPassword=async(req ,res)=>{
    try {
 
-      const {email,newPassword}=req.body;
-      if(!email||!newPassword){
+      const {email,newPassword,resetPasswordToken}=req.body;
+      if(!email||!newPassword ||!resetPasswordToken){
          return res.status(400).json({
             status:'fail',
-            message:'All fields are require'
+            message:'All fields and reset token are require'
          })
       }
 
@@ -374,6 +374,20 @@ export const resetPassword=async(req ,res)=>{
          })
       }
 
+      if(!user.resetPasswordToken!==resetPasswordToken){
+         return res.status(400).json({
+            status:'fail',
+            message:'Invalid reset token'
+         })
+      }
+
+      if(!user.resetPasswordExpired ||user.resetPasswordExpired<Date.now()){
+         return res.status(400).json({
+            status:'success',
+            message:'Reset password token expired,Please restart the forgot password process'
+         })
+      }
+      
       if(!user.otp || !user.otpExpire||user.otpExpire<Date.now()){
          return res.status(400).json({
             status:'fail',
@@ -385,6 +399,8 @@ export const resetPassword=async(req ,res)=>{
       const hashedPassword=await bcrypt.hash(newPassword,salt);
 
       user.password=hashedPassword;
+      user.resetPasswordToken=null;
+      user.resetPasswordExpired=null;
       user.otp=null;
       user.otpExpire=null;
       
