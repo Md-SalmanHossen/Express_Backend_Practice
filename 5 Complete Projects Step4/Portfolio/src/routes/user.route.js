@@ -13,5 +13,7 @@ router.get('/profile', auth, user.profile);
 router.put('/profile', auth, user.updateProfile);
 
 router.post('/forgot-password',user.forgotPassword);
+router.post('/verify-reset-otp',user.verifyOtpForReset);
+
 
 export default router;
