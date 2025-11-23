@@ -403,7 +403,7 @@ export const resetPassword=async(req ,res)=>{
    } catch (error) {
       res.status(500).json({
          status:'fail',
-         message:'Server error during ',
+         message:'Server error during reset password',
          error:error.message
       })
    }
@@ -412,14 +412,52 @@ export const resetPassword=async(req ,res)=>{
 export const changePassword=async(req ,res)=>{
    try {
       
+      const userId=req.userId;
+
+      const{oldPassword,newPassword}=req.body;
+      if(!oldPassword || !newPassword){
+         return res.status(400).json({
+            status:'fail',
+            message:'Both old and new password are required'
+         })
+      }
+
+      const user=await User.findById(userId);
+      if(!user){
+         return res.status(404).json({
+            status:'fail',
+            message:'User not found'
+         });
+      }
+
+      const isMatch=await bcrypt.compare(oldPassword,user.password);
+      if(!isMatch){
+         return res.status(400).json({
+            status:'fail',
+            message:'Old password is incorrect'
+         });
+      }
+
+      const salt=await bcrypt.genSalt(10);
+      const hashedPss=await bcrypt.hash(newPassword,salt);
+
+      user.password=hashedPss;
+      await user.save();
+
+      res.status(200).json({
+         status:'success',
+         message:'Password changed successfully'
+      });
+
    } catch (error) {
       res.status(500).json({
          status:'fail',
-         message:'Server error during ',
+         message:'Server error during change password',
          error:error.message
       })
    }
 }
+
 export const profileDelete=async(req ,res)=>{
    try {
       

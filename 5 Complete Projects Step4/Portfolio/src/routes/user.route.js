@@ -16,5 +16,7 @@ router.post('/forgot-password',user.forgotPassword);
 router.post('/verify-reset-otp',user.verifyOtpForReset);
 router.post('/reset-password', user.resetPassword);
 
+router.post('/change-password', auth, user.changePassword);
+
 
 export default router;
