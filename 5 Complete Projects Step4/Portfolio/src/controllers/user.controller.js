@@ -465,6 +465,21 @@ export const logout=async(req ,res)=>{
 
 export const profileDelete=async(req ,res)=>{
    try {
+
+      const userId=req.userId;
+      const deleteUser=await User.findByIdAndDelete(userId);
+
+      if(deleteUser){
+         return res.status(404).json({
+            status:'fail',
+            message:'User not found or already deleted'
+         })
+      }
+
+      res.status(200).json({
+         status:'success',
+         message:'User profile deleted successfully'
+      });
       
    } catch (error) {
       res.status(500).json({
