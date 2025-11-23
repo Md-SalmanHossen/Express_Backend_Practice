@@ -111,7 +111,7 @@ export const login=async(req ,res)=>{
       const {email,password}=req.body;
       if(!email || !password){
          return res.status(400).json({
-            status:'success',
+            status:'fail',
             message:'All fields are require',
          })
       };
@@ -120,7 +120,7 @@ export const login=async(req ,res)=>{
       if(!user){
          return res.status(404).json({
             status:'fail',
-            message:'User not found'
+            message:'Wrong email or password'
          })
       };
 
@@ -132,6 +132,12 @@ export const login=async(req ,res)=>{
          });
       }
 
+      if(!user.isEmailVerified){
+         return res.status(401).json({
+            status:'fail',
+            message:'Your email is not verified.Please verify your email first'
+         })
+      }
       const token=jwt.sign(
          {id:user._id},
          process.env.JWT_SECRET,
@@ -469,7 +475,7 @@ export const profileDelete=async(req ,res)=>{
       const userId=req.userId;
       const deleteUser=await User.findByIdAndDelete(userId);
 
-      if(deleteUser){
+      if(!deleteUser){
          return res.status(404).json({
             status:'fail',
             message:'User not found or already deleted'
@@ -480,11 +486,11 @@ export const profileDelete=async(req ,res)=>{
          status:'success',
          message:'User profile deleted successfully'
       });
-      
+
    } catch (error) {
       res.status(500).json({
          status:'fail',
-         message:'Server error during ',
+         message:'Server error during deleted profile',
          error:error.message
       })
    }
