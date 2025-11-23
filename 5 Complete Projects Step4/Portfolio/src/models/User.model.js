@@ -33,7 +33,7 @@ const userSchema=new mongoose.Schema({
   },
   isEmailVerified:{
     type:String,
-    default:null
+    default:false
   },
   emailOTP:{
     type:String,
