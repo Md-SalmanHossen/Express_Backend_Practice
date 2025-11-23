@@ -448,7 +448,7 @@ export const changePassword=async(req ,res)=>{
 
 export const logout=async(req ,res)=>{
    try {
-      
+
       res.status(200).json({
          message:'success',
          message:'Logout success'
@@ -457,7 +457,7 @@ export const logout=async(req ,res)=>{
    } catch (error) {
       res.status(500).json({
          status:'fail',
-         message:'Server error during ',
+         message:'Server error during logout',
          error:error.message
       })
    }
