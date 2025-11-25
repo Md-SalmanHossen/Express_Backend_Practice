@@ -6,5 +6,5 @@ const fileSchema=new mongoose.Schema({
    }
 },{timeseries:true});
 
-const file =mongoose.model('File',fileSchema);
-export default file;
+const File =mongoose.model('File',fileSchema);
+export default File;
