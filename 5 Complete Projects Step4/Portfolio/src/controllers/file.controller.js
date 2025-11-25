@@ -5,13 +5,24 @@ import File from './../models/File.model.js';
 export const fileUpload=async(req ,res)=>{
    try {
 
-      const {filename}=req.file.path;
-      const data=await File.create({filename});
+      if(!req.file){
+         return res.status(400).json({
+            status:'fail',
+            message:'No file uploaded'
+         });
+      }
+
+      const fileUrl=req.file.path;
+
+      const fileDoc=await File.create({
+         filename:fileUrl,
+      });
 
       res.status(201).json({
          status:'success',
          message:'File uploads successfully',
-         data,
+         fileUrl,
+         savedFile:fileDoc
       });
 
    } catch (error) {

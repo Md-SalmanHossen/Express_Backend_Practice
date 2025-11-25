@@ -2,9 +2,11 @@ import mongoose from "mongoose";
 
 const fileSchema=new mongoose.Schema({
    filename:{
-      type:'String'
+      type:'String',
+      require:true
    }
-},{timeseries:true});
+},{timestamps:true}
+);
 
 const File =mongoose.model('File',fileSchema);
 export default File;
