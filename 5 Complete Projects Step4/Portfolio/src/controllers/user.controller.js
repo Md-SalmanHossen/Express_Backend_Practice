@@ -467,7 +467,7 @@ export const logout=async(req ,res)=>{
 
       res.status(200).json({
          message:'success',
-         message:'Logout success'
+         message:'Logout successfully'
       });
 
    } catch (error) {
