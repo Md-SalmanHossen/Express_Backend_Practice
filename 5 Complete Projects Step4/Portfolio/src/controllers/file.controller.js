@@ -1,8 +1,8 @@
 
-import File from './../models/File.model.js';
+import File from '../models/File.model.js';
 
 
-export const fileUpload=async(req ,res)=>{
+const fileUpload=async(req ,res)=>{
    try {
 
       if(!req.file){
@@ -33,3 +33,4 @@ export const fileUpload=async(req ,res)=>{
       })
    } 
 }
+export default fileUpload;

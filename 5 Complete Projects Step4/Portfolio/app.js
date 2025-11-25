@@ -9,10 +9,10 @@ import helmet from 'helmet'
 import router from "./src/routes/user.route.js";
 import connectDB from "./src/config/database.config.js";
 import routeHandler from "./src/middlewares/route_handler.middleware.js";
+dotenv.config();
 
 
 const app=express();
-dotenv.config();
 
 app.use(cors());
 

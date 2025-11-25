@@ -12,7 +12,7 @@ router.post('/verify-email',user.verifyEmail);
 router.post('/login',user.login);
 
 router.get('/profile', auth, user.profile);
-router.put('/profile', auth, user.updateProfile);
+router.put('/profile', auth, upload.single('profilePic'), user.updateProfile);
 
 router.post('/forgot-password',user.forgotPassword);
 router.post('/verify-reset-otp',user.verifyOtpForReset);
@@ -23,6 +23,6 @@ router.post('/change-password', auth, user.changePassword);
 router.post('/logout', auth, user.logout);
 router.delete('/profile', auth, user.profileDelete);
 
-router.post('/uploads',upload.single('filename') ,fileUpload);
+router.post('/uploads', auth, upload.single('filename') ,fileUpload);
 
 export default router;
