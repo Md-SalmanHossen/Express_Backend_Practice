@@ -343,7 +343,7 @@ export const verifyOtpForReset=async(req ,res)=>{
       res.status(200).json({
          status:'success',
          message:'OTP verified successfully',
-         resetPasswordToken:resetPasswordToken,
+         resetPasswordToken:token,
       });
 
    } catch (error) {
