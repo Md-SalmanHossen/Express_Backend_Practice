@@ -215,7 +215,7 @@ export const updateProfile=async(req ,res)=>{
 
       if(name) user.name=name;
       if(bio) user.bio=bio;
-      if(avatar_Url) user.avatar_Url=avatar_Url;
+      if(req.file) user.avatar_Url=req.file.path;
 
       const updatedUser=await user.save();
       const userObj=updatedUser.toObject();
