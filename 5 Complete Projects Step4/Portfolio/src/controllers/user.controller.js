@@ -374,7 +374,7 @@ export const resetPassword=async(req ,res)=>{
          })
       }
 
-      if(!user.resetPasswordToken!==resetPasswordToken){
+      if(user.resetPasswordToken!==resetPasswordToken){
          return res.status(400).json({
             status:'fail',
             message:'Invalid reset token'
@@ -383,17 +383,11 @@ export const resetPassword=async(req ,res)=>{
 
       if(!user.resetPasswordExpired ||user.resetPasswordExpired<Date.now()){
          return res.status(400).json({
-            status:'success',
+            status:'fail',
             message:'Reset password token expired,Please restart the forgot password process'
          })
       }
       
-      if(!user.otp || !user.otpExpire||user.otpExpire<Date.now()){
-         return res.status(400).json({
-            status:'fail',
-            message:'OTP not verified or expired'
-         })
-      }
 
       const salt=await bcrypt.genSalt(10);
       const hashedPassword=await bcrypt.hash(newPassword,salt);
