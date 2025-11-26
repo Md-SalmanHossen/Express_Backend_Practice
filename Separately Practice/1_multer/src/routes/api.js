@@ -1,5 +1,9 @@
+
+import express from 'express';
 import Image from "../models/image.model.js";
 import upload from "../middlewares/multer.middleware.js";
+
+const router=express.Router();
 
 router.post("/upload-image", upload.single("image"), async(req,res)=>{
   try{
