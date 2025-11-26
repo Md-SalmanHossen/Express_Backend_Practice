@@ -197,8 +197,8 @@ export const profile=async(req ,res)=>{
 export const updateProfile=async(req ,res)=>{
    try {
 
-      const {name,bio,avatar_Url}=req.body;
-      if(!name && !bio &&avatar_Url){
+      const {name,bio}=req.body;
+      if(!name && !bio && !req.file){
          return res.status(400).json({
             status:'fail',
             message:'Nothing to update'
