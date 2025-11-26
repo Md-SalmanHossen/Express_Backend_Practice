@@ -2,7 +2,8 @@ import express from "express";
 import auth from './../middlewares/auth_middleware.js';
 import *as user from '../controllers/user.controller.js';
 import  fileUpload  from "../controllers/file.controller.js";
-import upload from './../config/multer.config.js';
+import upload from "../middlewares/multer.config.js";
+
 
 const router=express.Router();
 
