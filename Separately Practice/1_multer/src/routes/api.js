@@ -1,5 +1,5 @@
-import Image from "../models/Image.js";
-import upload from "../middleware/multer.js";
+import Image from "../models/image.model.js";
+import upload from "../middlewares/multer.middleware.js";
 
 router.post("/upload-image", upload.single("image"), async(req,res)=>{
   try{
@@ -17,3 +17,5 @@ router.post("/upload-image", upload.single("image"), async(req,res)=>{
     res.status(500).json({error:error.message});
   }
 });
+
+export default router;
