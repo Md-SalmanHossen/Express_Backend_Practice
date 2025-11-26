@@ -1,18 +1,19 @@
-import express from "express";
+import Image from "../models/Image.js";
 import upload from "../middleware/multer.js";
 
-const router = express.Router();
-
-router.post("/upload-image", upload.single("image"), (req, res) => {
-  try {
-    return res.json({
-      success: true,
-      message: "Image uploaded successfully",
-      imageUrl: req.file.path, // Cloudinary URL return
+router.post("/upload-image", upload.single("image"), async(req,res)=>{
+  try{
+    const saveImg = await Image.create({
+      url: req.file.path,
+      public_id: req.file.filename,
     });
-  } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
+
+    res.json({
+      success:true,
+      message:"Uploaded & Saved in DB",
+      data: saveImg
+    });
+  }catch(error){
+    res.status(500).json({error:error.message});
   }
 });
-
-export default router;

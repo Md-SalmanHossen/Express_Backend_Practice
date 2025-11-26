@@ -21,6 +21,7 @@ app.use(rateLimiter);
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
+// app.use(router);
 app.use(routeNotFound);
 
 export default app;
