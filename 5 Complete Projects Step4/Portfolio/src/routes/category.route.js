@@ -5,6 +5,9 @@ import express from 'express';
 
 const router=express.Router();
 
-router.post('/', auth , category.createCategories);
+router.post('/', auth , category.createCategories);//admin
+router.get('/', category.readCategories);//public
+router.put('/:id', auth , category.updateCategories);//admin
+
 
 export default router;
