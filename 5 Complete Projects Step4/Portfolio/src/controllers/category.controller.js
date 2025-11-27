@@ -65,7 +65,7 @@ export const updateCategories=async(req ,res)=>{
       const {id}=req.params;
       const {name,slug,description}=req.body;
 
-      const category=await User.findById(id);
+      const category=await Category.findById(id);
       if(!category){
          return res.status(404).json({
             status:'fail',
