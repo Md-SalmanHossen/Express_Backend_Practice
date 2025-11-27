@@ -22,7 +22,7 @@ export const createService=async(req ,res)=>{
 export const listAllService=async(req ,res)=>{
    try {
 
-      const services=await Service.find().populate('category','name','slug').sort({createdAt:-1});
+      const services=await Service.find().populate('category','name slug').sort({createdAt:-1});
 
       res.status(200).json({
          status:'success',
@@ -39,36 +39,56 @@ export const listAllService=async(req ,res)=>{
    }
 }
 
-export const updateService=async(req ,res)=>{
-   try {
-      const {id}=req.params;
+export const updateService = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const updates = req.body; 
 
-      const updatedService=await Service.findByIdAndUpdate(
-         id,
-         req.body,
-         {new:true, runValidators:true}
-      )
-      if(!updatedService){
-         return res.status(404).json({
-            status:'fail',
-            message:'update Service not found'
-         })
-      }
+        const oldService = await Service.findById(id);
 
-      res.status(200).json({
-         status:'success',
-         message:'Service updated successfully',
-         service:updatedService
-      });
+        if (!oldService) {
+            return res.status(404).json({
+                status: 'fail',
+                message: 'Service not found'
+            })
+        } 
+        if (req.file) {
+            const newImagePath = req.file.path; 
+            updates.imageUrl = newImagePath; 
+            if (oldService.imageUrl) {
+                const oldImagePath = oldService.imageUrl;
+                
+                fs.unlink(oldImagePath, (err) => {
+                    if (err) {
+                        console.error("Error deleting old image:", err);
+                    } else {
+                        console.log("Old image deleted successfully:", oldImagePath);
+                    }
+                });
+            }
+        }
+        
+        const updatedService = await Service.findByIdAndUpdate(
+            id,
+            updates, 
+            { new: true, runValidators: true }
+        );
 
-   } catch (error) {
-      res.status(500).json({
-         status:'fail',
-         message:'Server error during update service',
-         error:error.message
-      })
-   }
-}
+        res.status(200).json({
+            status: 'success',
+            message: 'Service updated successfully',
+            service: updatedService
+        });
+
+    } catch (error) {
+        const statusCode = error.name === 'ValidationError' ? 400 : 500;
+        res.status(statusCode).json({
+            status: 'fail',
+            message: error.name === 'ValidationError' ? error.message : 'Server error during update service',
+            error: error.message
+        });
+    }
+};
 
 export const deleteService=async(req ,res)=>{
    try {

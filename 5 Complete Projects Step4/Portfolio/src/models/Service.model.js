@@ -19,7 +19,7 @@ const serviceSchema = new mongoose.Schema({
    features:[{ type: String,trim:true }], 
    imageUrl:{ 
       type: String,
-      default:"",
+      default:" ",
       trim:true 
    },
     category:{
