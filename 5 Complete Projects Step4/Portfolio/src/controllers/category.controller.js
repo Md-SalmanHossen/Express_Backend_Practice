@@ -2,6 +2,34 @@ import Category from './../models/Category.model.js';
 
 export const createCategories=async(req ,res)=>{
    try {
+      const {name,slug,description}=req.body;
+
+      if(!name || !slug){
+         return res.status(400).json({
+            status:'false',
+            message:'Name and slug fields are required'
+         });
+      }
+
+      const existed=await Category.findOne({$or:[{name},{slug}]});
+      if(existed){
+         return res.status(400).json({
+            status:'false',
+            message:'Name or slug already exists'
+         })
+      }
+
+      const category=await Category.create({
+         name,
+         slug,
+         description
+      });
+
+      res.status(201).json({
+         status:'success',
+         message:'Category created successfully',
+         category
+      });
       
    } catch (error) {
       res.status(500).json({
@@ -52,7 +80,7 @@ export const updateCategories=async(req ,res)=>{
 
 export const deleteCategories=async(req ,res)=>{
    try {
-
+      const {id}=req.params;
       const deleted=await Category.findByIdAndDelete(id);
       if(!deleted){
          return res.status(404).json({
@@ -65,7 +93,7 @@ export const deleteCategories=async(req ,res)=>{
          status:'success',
          message:'Category deleted successfully'
       })
-      
+
    } catch (error) {
       res.status(500).json({
          status:'fail',
