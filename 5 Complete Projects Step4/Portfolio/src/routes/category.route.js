@@ -8,6 +8,6 @@ const router=express.Router();
 router.post('/', auth , category.createCategories);//admin
 router.get('/', category.readCategories);//public
 router.put('/:id', auth , category.updateCategories);//admin
-
+router.delete('/:id', auth , category.deleteCategories);
 
 export default router;
