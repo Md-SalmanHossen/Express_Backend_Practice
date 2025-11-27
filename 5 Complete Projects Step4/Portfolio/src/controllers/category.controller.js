@@ -1,4 +1,5 @@
 import Category from './../models/Category.model.js';
+import User from '../models/User.model.js'
 
 export const createCategories=async(req ,res)=>{
    try {
@@ -30,11 +31,11 @@ export const createCategories=async(req ,res)=>{
          message:'Category created successfully',
          category
       });
-      
+
    } catch (error) {
       res.status(500).json({
          status:'fail',
-         message:'Server error during',
+         message:'Server error during crete category',
          error:error.message
       })
    }
@@ -68,11 +69,31 @@ export const readCategories=async(req ,res)=>{
 
 export const updateCategories=async(req ,res)=>{
    try {
-      
+      const {id}=req.params.id;
+      const user=await User.findById({id});
+      if(!user){
+         return res.status(404).json({
+            status:'false',
+            message:'User not found'
+         })
+      }
+
+      const {name,slug,description}=req.body;
+      name=user.name ||name;
+      slug=user.slug ||slug;
+      description=user.description ||description;
+
+      await save();
+
+      res.status(200).json({
+         status:'success',
+         message:'Category updated successfully'
+      });
+
    } catch (error) {
       res.status(500).json({
          status:'fail',
-         message:'Server error during',
+         message:'Server error during update category',
          error:error.message
       })
    }
@@ -97,7 +118,7 @@ export const deleteCategories=async(req ,res)=>{
    } catch (error) {
       res.status(500).json({
          status:'fail',
-         message:'Server error during',
+         message:'Server error during delete category',
          error:error.message
       })
    }
