@@ -5,7 +5,7 @@ import express from 'express';
 
 const router=express.Router();
 
-router.get('/', );//public
+router.get('/', service.listAllService);//public
 
 router.post('/', auth , service.createService);//admin
 router.put('/:id', auth , service.updateService);
