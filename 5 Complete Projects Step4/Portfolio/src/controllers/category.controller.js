@@ -12,7 +12,7 @@ export const createCategories=async(req ,res)=>{
    }
 }
 
-export const listCategories=async(req ,res)=>{
+export const readCategories=async(req ,res)=>{
    try {
 
       const categories=await Category.find().sort({createdAt:-1});
@@ -28,7 +28,7 @@ export const listCategories=async(req ,res)=>{
          total:categories.length,
          categories
       });
-      
+
    } catch (error) {
       res.status(500).json({
          status:'fail',
@@ -52,6 +52,19 @@ export const updateCategories=async(req ,res)=>{
 
 export const deleteCategories=async(req ,res)=>{
    try {
+
+      const deleted=await Category.findByIdAndDelete(id);
+      if(!deleted){
+         return res.status(404).json({
+            status:'false',
+            message:'Category not found'
+         });
+      }
+
+      res.status(200).json({
+         status:'success',
+         message:'Category deleted successfully'
+      })
       
    } catch (error) {
       res.status(500).json({
