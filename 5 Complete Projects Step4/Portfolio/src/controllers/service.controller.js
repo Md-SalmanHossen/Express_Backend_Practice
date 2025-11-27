@@ -92,23 +92,23 @@ export const updateService=async(req ,res)=>{
 export const deleteService=async(req ,res)=>{
    try {
       const {id}=req.params;
-      const deleted=await Category.findByIdAndDelete(id);
+      const deleted=await Service.findByIdAndDelete(id);
       if(!deleted){
          return res.status(404).json({
             status:'false',
-            message:'Category not found'
+            message:'Service not found'
          });
       }
 
       res.status(200).json({
          status:'success',
-         message:'Category deleted successfully'
+         message:'Service deleted successfully'
       })
 
    } catch (error) {
       res.status(500).json({
          status:'fail',
-         message:'Server error during delete category',
+         message:'Server error during delete service',
          error:error.message
       })
    }
