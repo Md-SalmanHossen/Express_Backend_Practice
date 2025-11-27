@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const fileSchema=new mongoose.Schema({
    filename:{
       type:'String',
-      require:true
+      required:true
    }
 },{timestamps:true}
 );
