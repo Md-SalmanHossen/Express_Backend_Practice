@@ -1,40 +1,35 @@
-import Service from './../models/Category.model.js';
+import Service from '../models/Service.model.js';
 
 export const createService=async(req ,res)=>{
    try {
-      const {name,slug,description}=req.body;
+      const {title,description,price,features,imageUrl,category}=req.body;
 
-      if(!name || !slug){
+      if(!title || !description || !category){
          return res.status(400).json({
             status:'false',
-            message:'Name and slug fields are required'
+            message:'Title, description, and category fields are required'
          });
       }
 
-      const existed=await Category.findOne({$or:[{name},{slug}]});
-      if(existed){
-         return res.status(400).json({
-            status:'false',
-            message:'Name or slug already exists'
-         })
-      }
-
-      const category=await Category.create({
-         name,
-         slug,
-         description
+      const service=await Service.create({
+         title,
+         description,
+         price,
+         features,
+         imageUrl,
+         category
       });
 
       res.status(201).json({
          status:'success',
          message:'Category created successfully',
-         category
+         data:service
       });
 
    } catch (error) {
       res.status(500).json({
          status:'fail',
-         message:'Server error during crete category',
+         message:'Server error during crete service',
          error:error.message
       })
    }
