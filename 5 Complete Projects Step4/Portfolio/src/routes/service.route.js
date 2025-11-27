@@ -8,7 +8,7 @@ const router=express.Router();
 router.get('/', );//public
 
 router.post('/', auth , service.createService);//admin
-router.put('/:id', auth , );
+router.put('/:id', auth , service.updateService);
 router.delete('/:id', auth , );
 
 export default router;
