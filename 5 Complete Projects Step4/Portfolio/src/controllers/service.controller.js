@@ -38,18 +38,18 @@ export const createService=async(req ,res)=>{
 export const listAllService=async(req ,res)=>{
    try {
 
-      const categories=await Category.find().sort({createdAt:-1});
+      const service=await Service.find().sort({createdAt:-1});
 
       res.status(200).json({
          status:'success',
          total:categories.length,
-         categories
+         service
       });
 
    } catch (error) {
       res.status(500).json({
          status:'fail',
-         message:'Server error during  get all categories',
+         message:'Server error during  get all service',
          error:error.message
       })
    }
