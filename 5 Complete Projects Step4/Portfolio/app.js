@@ -6,9 +6,13 @@ import rateLimit from 'express-rate-limit';
 import hpp from "hpp";
 import helmet from 'helmet'
 
-import router from "./src/routes/user.route.js";
 import connectDB from "./src/config/database.config.js";
+import user_router from "./src/routes/user.route.js";
+import category_route from './src/routes/category.route.js'
+
 import routeHandler from "./src/middlewares/route_handler.middleware.js";
+
+
 dotenv.config();
 
 
@@ -29,7 +33,9 @@ app.use(limiter);
 
 connectDB();
 
-app.use('/portfolio/v1/api',router);
+app.use('/portfolio/v1/api',user_router);
+app.use('/portfolio/v1/api/category',category_route);
+
 app.use(routeHandler);
 
 
