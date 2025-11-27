@@ -58,32 +58,35 @@ export const listAllService=async(req ,res)=>{
 export const updateService=async(req ,res)=>{
    try {
       const {id}=req.params;
-      const {name,slug,description}=req.body;
+      const {title,price,description,features,category,imageUrl}=req.body;
 
-      const category=await Category.findById(id);
-      if(!category){
+      const service=await Service.findById(id);
+      if(!service){
          return res.status(404).json({
             status:'fail',
-            message:'Category not found'
+            message:'Service not found'
          })
       }
 
-      if(name !==undefined) category.name=name;
-      if(slug !==undefined) category.slug=slug;
-      if(description!==undefined) category.description=description;
+      if(title !==undefined) service.title=title;
+      if(price !==undefined) service.price=price;
+      if(description!==undefined) service.description=description;
+      if(features!==undefined) service.features=features;
+      if(category!==undefined) service.category=category;
+      if(imageUrl!==undefined) service.imageUrl=imageUrl;
 
-      await category.save();
+      await service.save();
 
       res.status(200).json({
          status:'success',
-         message:'Category updated successfully',
-         category
+         message:'Service updated successfully',
+         service
       });
 
    } catch (error) {
       res.status(500).json({
          status:'fail',
-         message:'Server error during update category',
+         message:'Server error during update service',
          error:error.message
       })
    }
