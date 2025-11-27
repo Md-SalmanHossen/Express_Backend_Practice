@@ -9,6 +9,6 @@ router.get('/', );//public
 
 router.post('/', auth , service.createService);//admin
 router.put('/:id', auth , service.updateService);
-router.delete('/:id', auth , );
+router.delete('/:id', auth ,service.deleteService);
 
 export default router;
