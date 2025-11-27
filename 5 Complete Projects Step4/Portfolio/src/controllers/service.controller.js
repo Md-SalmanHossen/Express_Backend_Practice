@@ -2,27 +2,11 @@ import Service from '../models/Service.model.js';
 
 export const createService=async(req ,res)=>{
    try {
-      const {title,description,price,features,imageUrl,category}=req.body;
-
-      if(!title || !description || !category){
-         return res.status(400).json({
-            status:'false',
-            message:'Title, description, and category fields are required'
-         });
-      }
-
-      const service=await Service.create({
-         title,
-         description,
-         price,
-         features,
-         imageUrl,
-         category
-      });
+      const service=await Service.create(req.body);
 
       res.status(201).json({
          status:'success',
-         message:'Category created successfully',
+         message:'Service created successfully',
          data:service
       });
 
@@ -38,12 +22,12 @@ export const createService=async(req ,res)=>{
 export const listAllService=async(req ,res)=>{
    try {
 
-      const service=await Service.find().sort({createdAt:-1});
+      const services=await Service.find().populate('category','name','slug').sort({createdAt:-1});
 
       res.status(200).json({
          status:'success',
-         total:categories.length,
-         service
+         total:Service.length,
+         services
       });
 
    } catch (error) {
@@ -58,29 +42,23 @@ export const listAllService=async(req ,res)=>{
 export const updateService=async(req ,res)=>{
    try {
       const {id}=req.params;
-      const {title,price,description,features,category,imageUrl}=req.body;
 
-      const service=await Service.findById(id);
-      if(!service){
+      const updatedService=await Service.findByIdAndUpdate(
+         id,
+         req.body,
+         {new:true, runValidators:true}
+      )
+      if(!updatedService){
          return res.status(404).json({
             status:'fail',
-            message:'Service not found'
+            message:'update Service not found'
          })
       }
-
-      if(title !==undefined) service.title=title;
-      if(price !==undefined) service.price=price;
-      if(description!==undefined) service.description=description;
-      if(features!==undefined) service.features=features;
-      if(category!==undefined) service.category=category;
-      if(imageUrl!==undefined) service.imageUrl=imageUrl;
-
-      await service.save();
 
       res.status(200).json({
          status:'success',
          message:'Service updated successfully',
-         service
+         service:updatedService
       });
 
    } catch (error) {

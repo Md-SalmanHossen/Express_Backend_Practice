@@ -3,25 +3,33 @@ import mongoose from "mongoose";
 const serviceSchema = new mongoose.Schema({
    title:{ 
       type: String, 
-      required: true 
+      required: [true,'Service title is required'],
+      trim:true
    },
    description:{ 
-      type: String 
+      type: String,
+      required:[true, "Service description is required"],
+      trim:true
    },
    price:{ 
       type: Number, 
-      default: 0 
+      default: 0,
+      min:[0,"Price can not be negative"]
    },
-   features:[{ type: String }], 
+   features:[{ type: String,trim:true }], 
    imageUrl:{ 
-      type: String 
+      type: String,
+      default:"",
+      trim:true 
    },
     category:{
       type: mongoose.Schema.Types.ObjectId, 
-      ref: "Category" 
+      ref: "Category",
+      required:[true, "Category link is required"] 
    },
    published:{
-       type: Boolean, default: true },
+       type: Boolean, default: true 
+      },
   },
   { timestamps: true }
 );
