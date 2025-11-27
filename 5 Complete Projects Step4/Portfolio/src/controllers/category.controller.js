@@ -45,12 +45,6 @@ export const readCategories=async(req ,res)=>{
    try {
 
       const categories=await Category.find().sort({createdAt:-1});
-      if(!categories){
-         return res.status(400).json({
-            status:'fail',
-            message:''
-         })
-      };
 
       res.status(200).json({
          status:'success',
@@ -69,25 +63,27 @@ export const readCategories=async(req ,res)=>{
 
 export const updateCategories=async(req ,res)=>{
    try {
-      const {id}=req.params.id;
-      const user=await User.findById({id});
-      if(!user){
+      const {id}=req.params;
+      const {name,slug,description}=req.body;
+
+      const category=await User.findById(id);
+      if(!category){
          return res.status(404).json({
-            status:'false',
-            message:'User not found'
+            status:'fail',
+            message:'Category not found'
          })
       }
 
-      const {name,slug,description}=req.body;
-      name=user.name ||name;
-      slug=user.slug ||slug;
-      description=user.description ||description;
+      if(name !==undefined) category.name=name;
+      if(slug !==undefined) category.slug=slug;
+      if(description!==undefined) category.description=description;
 
-      await save();
+      await category.save();
 
       res.status(200).json({
          status:'success',
-         message:'Category updated successfully'
+         message:'Category updated successfully',
+         category
       });
 
    } catch (error) {
